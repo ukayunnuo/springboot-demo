@@ -126,12 +126,18 @@
             <AppenderRef ref="errorLog"/>
         </logger>
 
-        <!-- AsyncRoot - 异步记录日志 - 需要LMAXDisruptor的支持 -->
+        <!-- AsyncRoot - 异步记录日志 - 需要LMAXDisruptor的支持, 如果不想使用AsyncRoot，则可以放开下面的 Root -->
         <AsyncRoot level="info" includeLocation="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="infoLog"/>
             <AppenderRef ref="errorLog"/>
         </AsyncRoot>
+
+<!--        <Root level="info" includeLocation="true">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="infoLog"/>-->
+<!--            <AppenderRef ref="errorLog"/>-->
+<!--        </Root>-->
 
         <!-- root logger 配置 -->
         <!--        <Root level="ALL" includeLocation="true">-->
