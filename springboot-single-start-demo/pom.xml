@@ -17,10 +17,6 @@
     <description>springboot 单个启动测试模块用例</description>
     <properties>
         <java.version>1.8</java.version>
-        <lombok.version>1.18.28</lombok.version>
-        <hutool.version>5.8.20</hutool.version>
-        <fastjson2.version>2.0.34</fastjson2.version>
-        <junit.version>4.13.2</junit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
