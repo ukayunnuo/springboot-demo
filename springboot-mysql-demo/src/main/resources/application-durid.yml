@@ -1,29 +1,25 @@
 spring:
   datasource:
+    #动态数据源DS 配置
     dynamic:
       primary: master #设置默认的数据源或者数据源组,默认值即为master
       strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
       datasource:
         master: # 默认数据源
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${SPRINGBOOT_DEMO_MASTER_IP:127.0.0.1}:${SPRINGBOOT_DEMO_MASTER_PROT:3306}/SPRINGBOOT_DEMO?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://${SPRINGBOOT_DEMO_MASTER_IP:127.0.0.1}:${SPRINGBOOT_DEMO_MASTER_PORT:3306}/SPRINGBOOT_DEMO?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${SPRINGBOOT_DEMO_MASTER_USER:root}
           password: ${SPRINGBOOT_DEMO_MASTER_PASSWD:root}
         slave:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${SPRINGBOOT_DEMO_SLAVE_IP:127.0.0.1}:${SPRINGBOOT_DEMO_SLAVE_PROT:3306}/SPRINGBOOT_DEMO_SLAVE?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://${SPRINGBOOT_DEMO_SLAVE_IP:127.0.0.1}:${SPRINGBOOT_DEMO_SLAVE_PORT:3306}/SPRINGBOOT_DEMO_SLAVE?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${SPRINGBOOT_DEMO_SLAVE_USER:root}
           password: ${SPRINGBOOT_DEMO_SLAVE_PASSWD:root}
         other:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${SPRINGBOOT_DEMO_OTHER_IP:127.0.0.1}:${SPRINGBOOT_DEMO_OTHER_PROT:3306}/SPRINGBOOT_DEMO_OTHER?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://${SPRINGBOOT_DEMO_OTHER_IP:127.0.0.1}:${SPRINGBOOT_DEMO_OTHER_PORT:3306}/SPRINGBOOT_DEMO_OTHER?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${SPRINGBOOT_DEMO_OTHER_USER:root}
           password: ${SPRINGBOOT_DEMO_OTHER_PASSWD:root}
-        btiming-read:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://10.118.74.134:3306/btiming?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
-          username: btiming
-          password: NPC_loczzf2_ed7d62ae
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: DateHikariCP
