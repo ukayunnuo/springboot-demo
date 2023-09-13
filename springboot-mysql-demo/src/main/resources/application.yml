@@ -9,5 +9,5 @@ spring:
     time-zone: GMT+8
   profiles:
     active:
-      - durid-dev
+      - durid
 
