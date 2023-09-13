@@ -1,0 +1,25 @@
+spring:
+  #redis配置 单机版本
+  redis:
+    # 地址
+    host: ${SPRINGBOOT_DEMO_REDIS_IP:127.0.0.1}
+    # 端口，默认：6379
+    port: ${SPRINGBOOT_DEMO_REDIS_PORT:6379}
+    # 密码
+    password: ${SPRINGBOOT_DEMO_REDIS_PWD:}
+    # 数据库
+    database: ${SPRINGBOOT_DEMO_REDIS_DATABASE:0}
+    # 连接超时时间
+    timeout: 1000
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 20
+        max-wait: -1ms
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 2
