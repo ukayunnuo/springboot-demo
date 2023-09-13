@@ -1,9 +1,11 @@
 package com.ukayunnuo.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ukayunnuo.core.Result;
 import com.ukayunnuo.domain.entity.User;
+import com.ukayunnuo.domain.request.UserPageReq;
 import com.ukayunnuo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,9 @@ public class UserDemoController {
 
 
     @PostMapping("/page")
-    public Result<Page<User>> selectAll(@RequestBody Page<User> page, @RequestBody User user) {
-        return Result.success(userService.page(page, new QueryWrapper<>(user)));
+    public Result<Page<User>> selectAll(@RequestBody UserPageReq req) {
+
+        return Result.success(userService.page(Page.of(req.getCurrent(), req.getSize()), new QueryWrapper<>(BeanUtil.toBean(req, User.class))));
     }
 
     @GetMapping("/getById/{id}")

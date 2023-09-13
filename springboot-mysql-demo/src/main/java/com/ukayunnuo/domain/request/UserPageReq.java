@@ -1,5 +1,6 @@
 package com.ukayunnuo.domain.request;
 
+import com.ukayunnuo.domain.entity.User;
 import lombok.Data;
 
 /**
@@ -9,5 +10,11 @@ import lombok.Data;
  * @date 2023-09-13
  */
 @Data
-public class UserPageReq extends {
+public class UserPageReq extends User {
+
+    private Long size = 10L;
+
+    private Long current  = 1L;
+
+
 }

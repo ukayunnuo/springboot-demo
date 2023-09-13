@@ -6,17 +6,17 @@ spring:
       datasource:
         master: # 默认数据源
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-          url: jdbc:p6spy:mysql://${KBK_MASTER_IP:127.0.0.1}:${KBK_MASTER_PROT:3306}/KBK?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:p6spy:mysql://${KBK_MASTER_IP:127.0.0.1}:${KBK_MASTER_PORT:3306}/KBK?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${KBK_MASTER_USER:root}
           password: ${KBK_MASTER_PASSWD:root}
         slave:
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-          url: jdbc:p6spy:mysql://${KBK_SLAVE_IP:127.0.0.1}:${KBK_SLAVE_PROT:3306}/KBK_SLAVE?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:p6spy:mysql://${KBK_SLAVE_IP:127.0.0.1}:${KBK_SLAVE_PORT:3306}/KBK_SLAVE?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${KBK_SLAVE_USER:root}
           password: ${KBK_SLAVE_PASSWD:root}
         other:
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-          url: jdbc:p6spy:mysql://${KBK_OTHER_IP:127.0.0.1}:${KBK_OTHER_PROT:3306}/KBK_OTHER?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+          url: jdbc:p6spy:mysql://${KBK_OTHER_IP:127.0.0.1}:${KBK_OTHER_PORT:3306}/KBK_OTHER?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${KBK_OTHER_USER:root}
           password: ${KBK_OTHER_PASSWD:root}
     type: com.zaxxer.hikari.HikariDataSource
