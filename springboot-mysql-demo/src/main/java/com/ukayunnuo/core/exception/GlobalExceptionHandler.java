@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public <T> Result<T> handleException(Exception e,HttpServletRequest request){
         Map<String, String[]> reqParams = ServletUtil.getParams(request);
-        log.warn("handleException System error ! path：{}, Request parameter：{}, e:{}", request.getRequestURI(), reqParams, e.getMessage(), e);
+        log.error("handleException System error ! path：{}, Request parameter：{}, e:{}", request.getRequestURI(), reqParams, e.getMessage(), e);
         return Result.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
     }
 
