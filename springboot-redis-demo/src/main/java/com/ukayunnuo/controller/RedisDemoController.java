@@ -22,19 +22,19 @@ import javax.annotation.Resource;
 public class RedisDemoController {
 
     @Resource
-    private JedisCommands jedis;
+    private JedisCommands jedisCommands;
 
     @PostMapping("setValue")
     public Result<String> setRedisValue(@RequestBody RedisParamReq req) {
 
         String redisKey = RedisKey.REDIS_DEMO_KEY.makeRedisKey(req.getKey());
-        return Result.success(jedis.setex(redisKey, RedisKey.REDIS_DEMO_KEY.expireTime(), req.getValue()));
+        return Result.success(jedisCommands.setex(redisKey, RedisKey.REDIS_DEMO_KEY.expireTime(), req.getValue()));
     }
 
     @PostMapping("getValue")
     public Result<String> getRedisValue(@RequestBody RedisParamReq req) {
 
-        return Result.success(jedis.get(RedisKey.REDIS_DEMO_KEY.makeRedisKey(req.getKey())));
+        return Result.success(jedisCommands.get(RedisKey.REDIS_DEMO_KEY.makeRedisKey(req.getKey())));
     }
 
 }
