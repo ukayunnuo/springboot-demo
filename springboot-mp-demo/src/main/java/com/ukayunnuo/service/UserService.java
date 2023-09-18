@@ -6,7 +6,7 @@ import com.ukayunnuo.domain.entity.User;
 /**
  * User 服务接口
  *
- * @author yunnuo <a href="nuo.he@backgardon.com">Email: 2552846359@qq.com</a>
+ * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2023-09-13
  */
 public interface UserService extends IService<User> {

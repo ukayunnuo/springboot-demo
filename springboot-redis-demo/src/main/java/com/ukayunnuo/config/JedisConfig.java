@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * redis 配置类
  *
- * @author yunnuo <a href="nuo.he@backgardon.com">Email: 2552846359@qq.com</a>
+ * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2023-09-15
  */
 @Slf4j
