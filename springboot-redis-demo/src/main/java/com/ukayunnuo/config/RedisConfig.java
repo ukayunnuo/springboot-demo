@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Configuration
-public class JedisConfig {
+public class RedisConfig {
 
     @Resource
     private RedisProperties properties;
