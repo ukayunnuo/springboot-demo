@@ -1,0 +1,35 @@
+### JedisCommands 测试
+POST http://localhost:8083/demo/redis/setValue/jedisCommands
+Content-Type: application/json
+
+{
+  "key": "demo",
+  "value": "demo-jedisCommands"
+}
+
+### JedisClusterCommands 测试
+POST http://localhost:8083/demo/redis/setValue/jedisClusterCommands
+Content-Type: application/json
+
+{
+"key": "demo",
+"value": "demo-jedisClusterCommands"
+}
+
+### redisTemplate 测试
+POST http://localhost:8083/demo/redis/setValue/redisTemplate
+Content-Type: application/json
+
+{
+  "key": "demo",
+  "value": "demo-redisTemplate"
+}
+
+### StringRedisTemplate 测试
+POST http://localhost:8083/demo/redis/setValue/stringRedisTemplate
+Content-Type: application/json
+
+{
+  "key": "demo",
+  "value": "demo-stringRedisTemplate"
+}

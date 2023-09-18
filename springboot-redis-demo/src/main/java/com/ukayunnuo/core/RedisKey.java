@@ -19,9 +19,9 @@ public enum RedisKey {
     ;
 
 
-    private String prefix;
+    private final String prefix;
 
-    private Integer expireTime;
+    private final Integer expireTime;
 
     RedisKey(String prefix, Integer expireTime) {
         this.prefix = prefix;
@@ -53,7 +53,7 @@ public enum RedisKey {
      * @param items     参数
      * @return 组装结果
      */
-    public String makeRedisKey(String separator, Object... items) {
-        return StrUtil.join(separator, items);
+    private String makeRedisKey(String separator, Object... items) {
+        return StrUtil.join(separator, this.prefix, items);
     }
 }
