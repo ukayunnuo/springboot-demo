@@ -1,0 +1,15 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # 手动提交消息
+    listener:
+      simple:
+#        acknowledge-mode: auto
+        acknowledge-mode: manual
+      direct:
+#        acknowledge-mode: auto
+        acknowledge-mode: manual
