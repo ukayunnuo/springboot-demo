@@ -2,11 +2,11 @@ knife4j:
   enable: true
   openapi:
     title: Knife4j接口文档
-    description: "这是个介绍文档"
+    description: "该模块集成使用 Knife4j 接口文档, Knife4j官方文档: https://doc.xiaominfo.com/docs/quick-start"
     email: 2552846359@qq.com
     concat: 云诺
     url: https://gitee.com/linyunnuo/springboot-demo
-    version: v4.0
+    version: v1.0.0
     license: Apache 2.0
     license-url: https://stackoverflow.com/
     terms-of-service-url: https://stackoverflow.com/
