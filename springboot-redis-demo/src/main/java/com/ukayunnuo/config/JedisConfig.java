@@ -46,7 +46,7 @@ public class JedisConfig {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(properties.getLettuce().getPool().getMaxActive());
         config.setMaxIdle(properties.getLettuce().getPool().getMaxIdle());
-        config.setMaxWaitMillis(properties.getLettuce().getPool().getMaxWait().toMillis());
+        config.setMaxWait(properties.getLettuce().getPool().getMaxWait());
 
         return new JedisCluster(nodes, config);
     }
