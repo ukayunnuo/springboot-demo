@@ -7,6 +7,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * MQ 消息体
+ *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2023-09-19
  */
@@ -18,6 +20,6 @@ public class MqMsgStruct implements Serializable {
 
     @Override
     public String toString() {
-       return JSONObject.toJSONString(this);
+        return JSONObject.toJSONString(this);
     }
 }
