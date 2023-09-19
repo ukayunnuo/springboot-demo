@@ -4,6 +4,7 @@ import com.ukayunnuo.core.RedisKey;
 import com.ukayunnuo.core.Result;
 import com.ukayunnuo.domain.request.RedisParamReq;
 import com.ukayunnuo.domain.response.RedisRes;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class RedisDemoController {
     @Resource
     private JedisCommands jedisCommands;
 
-    @Resource
+    @Autowired(required = false)
     private JedisClusterCommands jedisClusterCommands;
 
     @Resource

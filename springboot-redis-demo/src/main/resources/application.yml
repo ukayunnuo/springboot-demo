@@ -9,4 +9,4 @@ spring:
     time-zone: GMT+8
   profiles:
     active:
-      - redis-cluster
+      - redis-single
