@@ -35,7 +35,9 @@ public class Result<T> implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date serverTime;
-
+    
+    private long serverTimestamp;
+    
 
     /**
      * 初始化一个新创建的 Result 对象，使其表示一个空消息。
@@ -66,6 +68,7 @@ public class Result<T> implements Serializable {
         this.msg = msg;
         this.res = res;
         this.serverTime = new Date();
+        this.serverTimestamp = System.currentTimeMillis();
     }
 
     /**

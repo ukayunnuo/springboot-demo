@@ -35,6 +35,9 @@ public class Result<T> implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date serverTime;
+    
+    private long serverTimestamp;
+
 
 
     /**
@@ -66,6 +69,7 @@ public class Result<T> implements Serializable {
         this.msg = msg;
         this.res = res;
         this.serverTime = new Date();
+        this.serverTimestamp = System.currentTimeMillis();
     }
 
     /**
