@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.rabbitmq.client.Channel;
 import com.ukayunnuo.constants.RabbitConstants;
+import com.ukayunnuo.core.MqMsgStruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -11,7 +12,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * 直连模式 消费者
@@ -35,19 +35,18 @@ public class DirectDemoConsumer {
     }
 
     @RabbitHandler
-    public void handle(Message message, Channel channel) {
-        String msgBody = new String(message.getBody(), StandardCharsets.UTF_8);
+    public void handle(MqMsgStruct msg, Message message, Channel channel) {
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
-        log.info("start --> queue：{}, msgBody：{}, deliveryTag:{}", RabbitConstants.QueueConstants.DIRECT_MODE_QUEUE_DEMO, msgBody, deliveryTag);
+        log.info("start --> queue：{}, msg:{}, deliveryTag:{}", RabbitConstants.QueueConstants.DIRECT_MODE_QUEUE_DEMO, msg, deliveryTag);
         try {
             channel.basicAck(deliveryTag, false);
         } catch (Exception e) {
-            log.error("channel.basicAck error ! message:{}, channel:{}, e:{}", JSONObject.toJSONString(message), JSONObject.toJSONString(channel), e.getMessage(), e);
+            log.error("channel.basicAck error ! message:{}, msg:{}, channel:{}, e:{}", JSONObject.toJSONString(message), msg, JSONObject.toJSONString(channel), e.getMessage(), e);
             try {
                 // 重新压入MQ
                 channel.basicRecover();
             } catch (IOException ex) {
-                log.error("channel.basicRecover error ! message:{}, channel:{}, e:{}", JSONObject.toJSONString(message), JSONObject.toJSONString(channel), e.getMessage(), e);
+                log.error("channel.basicRecover error ! message:{}, msg:{}, channel:{}, e:{}", JSONObject.toJSONString(message), msg, JSONObject.toJSONString(channel), e.getMessage(), e);
             }
         }
 

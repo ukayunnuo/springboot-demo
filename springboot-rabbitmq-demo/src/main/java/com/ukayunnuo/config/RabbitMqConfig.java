@@ -3,11 +3,10 @@ package com.ukayunnuo.config;
 import com.ukayunnuo.constants.RabbitConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * RabbitMq 配置
@@ -18,6 +17,18 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class RabbitMqConfig {
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory) {
+        connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.CORRELATED);
+        connectionFactory.setPublisherReturns(Boolean.TRUE);
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMandatory(true);
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> log.info("MQ Message sent successfully! correlationData:{}, ack:{}, cause:{}", correlationData, ack, cause));
+        rabbitTemplate.setReturnsCallback((message) -> log.info("MQ Message loss！ message:{}", message));
+        return rabbitTemplate;
+    }
+
 
     /**
      * 队列声明：直连模式测试
@@ -111,18 +122,20 @@ public class RabbitMqConfig {
         return BindingBuilder.bind(topicDemoQueue).to(topicDemoExchange).with(RabbitConstants.TopicRoutingKey.ROUTING_KEY_DEMO);
     }
 
-    /**
+
+    /*
+     *//**
      * 队列声明：延迟队列模式测试
-     */
+     *//*
     @Bean
     public Queue delayDemoQueue() {
-        return new Queue(RabbitConstants.QueueConstants.DELAY_MODE_QUEUE_DEMO);
+        return new Queue(RabbitConstants.QueueConstants.DELAY_MODE_QUEUE_DEMO, Boolean.TRUE);
     }
 
 
-    /**
+    *//**
      * Exchange 声明： 延迟队列模式测试
-     */
+     *//*
     @Bean
     public CustomExchange delayDemoExchange() {
         Map<String, Object> arguments = new HashMap<>(1);
@@ -137,20 +150,22 @@ public class RabbitMqConfig {
     }
 
 
-    /**
+    *//**
      * Binding 声明: 延迟队列模式测试
      *
      * @param delayDemoQueue    绑定队列
      * @param delayDemoExchange 绑定交换机
      * @return {@link Binding}
-     */
+     *//*
     @Bean
-    public Binding topicDemoBinding(Queue delayDemoQueue, CustomExchange delayDemoExchange) {
+    public Binding delayDemoBinding(Queue delayDemoQueue, CustomExchange delayDemoExchange) {
         return BindingBuilder
                 .bind(delayDemoQueue)
                 .to(delayDemoExchange)
                 .with(RabbitConstants.QueueConstants.DELAY_MODE_QUEUE_DEMO).
                 noargs();
     }
+
+    */
 
 }
