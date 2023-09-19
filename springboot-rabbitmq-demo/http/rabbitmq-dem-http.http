@@ -1,0 +1,8 @@
+### 发送mq消息
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "queue": "direct.queue.demo",
+  "msg": "test msg info"
+}
