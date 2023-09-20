@@ -1,8 +1,84 @@
-### 发送mq消息
+### 发送mq消息 direct 简单模式 -> 端对端
 POST http://localhost:8084/demo/rabbitmq/produce/sendMq
 Content-Type: application/json
 
 {
   "queue": "direct.queue.demo",
-  "msg": "test msg info"
+  "msg": "direct simple test msg info"
+}
+
+### 发送mq消息 direct路由模式 -> 指定routingKey 示例:{direct.routing.demo}, 注意：如果传的是routingKey, 必须传exchange
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "exchange": "direct.exchange.demo",
+  "routingKey": "direct.routing.demo",
+  "msg": "direct routing test msg info"
+}
+
+### 发送mq消息 direct路由模式 -> 指定队列 示例:{routing.queue.demo1, routing.queue.demo2}
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "exchange": "direct.exchange.demo",
+  "routingKey": "routing.queue.demo1",
+  "msg": "routing test msg info"
+}
+
+### 发送mq消息 fanout 模式 -> 广播模式
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "exchange": "fanout.exchange.demo",
+  "msg": "fanout test fanout msg info -> all"
+}
+
+### 发送mq消息 topic 模式 匹配 topic.queue.demo.# 和 topic.queue.*
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "exchange": "topic.exchange.demo",
+  "routingKey": "topic.queue.demo.yunnuo",
+  "msg": "topic test msg info"
+}
+
+### 发送mq消息 topic 模式 匹配 topic.queue.*
+POST http://localhost:8084/demo/rabbitmq/produce/sendMq
+Content-Type: application/json
+
+{
+  "exchange": "topic.exchange.demo",
+  "routingKey": "topic.queue.demo2.yunnuo",
+  "msg": "topic test msg info"
+}
+
+### 发送mq消息 Delay 模式
+POST http://localhost:8084/demo/rabbitmq/produce/sendDelayMq
+Content-Type: application/json
+
+{
+  "exchange": "delay.exchange.demo",
+  "routingKey": "delay.queue.demo",
+  "msg": "Delay test msg info"
+}
+
+
+### 删除 交换机Exchange
+POST http://localhost:8084/demo/rabbitmq/admin/deleteExchange
+Content-Type: application/json
+
+{
+  "exchange": "direct.exchange.demo"
+}
+
+### 删除 Queue
+POST http://localhost:8084/demo/rabbitmq/admin/deleteQueue
+Content-Type: application/json
+
+{
+  "exchange": "direct.queue.demo"
 }
