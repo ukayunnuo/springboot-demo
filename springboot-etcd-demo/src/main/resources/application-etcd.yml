@@ -1,5 +1,5 @@
 etcd:
-  watch-key-prefix:
+  watch-key-prefix: yn-demo
   endpoints:
     - http://127.0.0.1:2379
     - http://127.0.0.1:2380
