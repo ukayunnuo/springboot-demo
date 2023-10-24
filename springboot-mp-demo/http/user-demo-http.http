@@ -34,3 +34,9 @@ GET http://localhost:8082/demo/user/getById/1
 #    "email": "2552846359@qq.com"
 #  }
 # }
+
+### User Map结构返回测试
+POST http://localhost:8082/demo/user/mapDemo
+Content-Type: application/json
+
+[1]
