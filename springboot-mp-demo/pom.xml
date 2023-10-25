@@ -49,11 +49,11 @@
         </dependency>
 
         <!-- HikariCP -->
-        <dependency>
+<!--        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${HikariCP.version}</version>
-        </dependency>
+        </dependency> -->
         <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>

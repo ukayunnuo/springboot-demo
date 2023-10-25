@@ -19,16 +19,23 @@ spring:
           url: jdbc:p6spy:mysql://${KBK_OTHER_IP:127.0.0.1}:${KBK_OTHER_PORT:3306}/KBK_OTHER?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
           username: ${KBK_OTHER_USER:root}
           password: ${KBK_OTHER_PASSWD:root}
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      pool-name: DateHikariCP
-      minimum-idle: 5
-      idle-timeout: 180000
-      maximum-pool-size: 10
-      auto-commit: true
-      max-lifetime: 1800000
-      connection-timeout: 30000
-      connection-test-query: SELECT 1
+      druid:
+        initial-size: 1
+        min-idle: 1
+        max-active: 10
+        max-wait: 60000
+        async-init: true
+        query-timeout: 30000
+#    type: com.zaxxer.hikari.HikariDataSource # 需要pom依赖HikariCP
+#    hikari:
+#      pool-name: DateHikariCP
+#      minimum-idle: 5
+#      idle-timeout: 180000
+#      maximum-pool-size: 10
+#      auto-commit: true
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1
 
 # mybatis-plus 配置
 mybatis-plus:
