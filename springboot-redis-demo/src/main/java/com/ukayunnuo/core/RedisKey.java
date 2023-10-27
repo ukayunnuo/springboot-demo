@@ -14,16 +14,16 @@ public enum RedisKey {
     /**
      * redis demo key 过期时间：2分钟
      */
-    REDIS_DEMO_KEY("redis_demo_key", 2 * 60),
+    REDIS_DEMO_KEY("redis_demo_key", 2 * 60L),
 
     ;
 
 
     private final String prefix;
 
-    private final Integer expireTime;
+    private final Long expireTime;
 
-    RedisKey(String prefix, Integer expireTime) {
+    RedisKey(String prefix, Long expireTime) {
         this.prefix = prefix;
         this.expireTime = expireTime;
     }
@@ -32,7 +32,7 @@ public enum RedisKey {
         return prefix;
     }
 
-    public Integer expireTime() {
+    public Long expireTime() {
         return expireTime;
     }
 
