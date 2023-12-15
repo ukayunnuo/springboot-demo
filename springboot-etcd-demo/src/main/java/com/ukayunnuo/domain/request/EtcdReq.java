@@ -1,4 +1,4 @@
-package com.ukayunnuo.domain.requst;
+package com.ukayunnuo.domain.request;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;

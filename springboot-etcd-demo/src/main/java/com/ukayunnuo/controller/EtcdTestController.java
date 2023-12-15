@@ -2,7 +2,7 @@ package com.ukayunnuo.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.core.Result;
-import com.ukayunnuo.domain.requst.EtcdReq;
+import com.ukayunnuo.domain.request.EtcdReq;
 import com.ukayunnuo.enums.WatchKeyStatus;
 import com.ukayunnuo.utils.EtcdHandleUtil;
 import io.etcd.jetcd.kv.PutResponse;
