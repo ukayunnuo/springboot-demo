@@ -24,6 +24,7 @@ public class KafkaConsumerTest {
         for (ConsumerRecord<String, String> record : records) {
             log.info("receiveMessage record key:{}, value:{}", record.key(), record.value());
         }
+        acknowledgment.acknowledge();
     }
 
 

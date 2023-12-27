@@ -21,7 +21,6 @@
         <lombok.version>1.18.28</lombok.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
-        <kafka.version>3.1.1</kafka.version>
     </properties>
 
     <dependencies>
@@ -39,7 +38,6 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>${kafka.version}</version>
         </dependency>
 
         <!-- 热部署插件 -->
