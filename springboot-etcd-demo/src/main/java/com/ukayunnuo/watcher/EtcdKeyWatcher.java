@@ -43,6 +43,12 @@ public class EtcdKeyWatcher {
         this.watchedKeysCache = cacheManager.getCache(CACHE_ETCD_KEYS_FILED);
     }
 
+    /**
+     * 监听并存储到缓存
+     *
+     * @param key 配置key
+     * @return 监听结果
+     */
     public WatchKeyStatus watchKeyHandlerAndCache(String key) {
 
         if (Objects.nonNull(watchedKeysCache.get(key))) {
@@ -82,11 +88,16 @@ public class EtcdKeyWatcher {
 
         Watch watchClient = etcdClient.getWatchClient();
 
-        watchClient.watch(ByteSequence.from(key,StandardCharsets.UTF_8), watchOption, listener);
+        watchClient.watch(ByteSequence.from(key, StandardCharsets.UTF_8), watchOption, listener);
 
         return WatchKeyStatus.SUCCEEDED;
     }
 
+    /**
+     * 获取 etcd中的 key值
+     * @param key 配置key
+     * @return 结果
+     */
     public String getValueForKVClient(String key) {
         KV kvClient = etcdClient.getKVClient();
         ByteSequence keyByteSequence = ByteSequence.from(key, StandardCharsets.UTF_8);
