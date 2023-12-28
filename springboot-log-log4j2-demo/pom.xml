@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.ukayunnuo</groupId>
-    <artifactId>springboot-log4j2-log-demo</artifactId>
+    <artifactId>springboot-log-log4j2-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>springboot-log4j2-log-demo</name>
+    <name>springboot-log-log4j2-demo</name>
     <description>springboot 集成 log4j2 日志框架 demo</description>
     <properties>
         <java.version>1.8</java.version>
