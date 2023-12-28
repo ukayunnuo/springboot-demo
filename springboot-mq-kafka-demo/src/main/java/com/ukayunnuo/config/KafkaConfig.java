@@ -45,6 +45,11 @@ public class KafkaConfig {
         return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
     }
 
+    /**
+     * kafka 默认 ContainerFactory
+     *
+     * @return {@link ConcurrentKafkaListenerContainerFactory}
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -67,7 +72,11 @@ public class KafkaConfig {
     }
 
 
-
+    /**
+     * 自定义 ContainerFactory
+     *
+     * @return {@link ConcurrentKafkaListenerContainerFactory}
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> batchContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
