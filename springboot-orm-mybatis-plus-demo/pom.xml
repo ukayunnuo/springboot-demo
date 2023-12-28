@@ -10,14 +10,19 @@
     </parent>
 
     <groupId>com.ukayunnuo</groupId>
-    <artifactId>springboot-rabbitmq-demo</artifactId>
+    <artifactId>springboot-orm-mybatis-plus-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>springboot-rabbitmq-demo</name>
-    <description>springboot 集成 RabbitMQ 文档 测试模块</description>
+    <name>springboot-orm-mybatis-plus-demo</name>
+    <description>springboot 集成MySQL MyBatis-Plus 测试demo</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <HikariCP.version>4.0.3</HikariCP.version>
+        <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
+        <p6spy.version>3.9.1</p6spy.version>
+        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mysql-connector.version>8.0.33</mysql-connector.version>
         <lombok.version>1.18.28</lombok.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
@@ -35,19 +40,43 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- amqp -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
-
         <!-- 热部署插件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+
+        <!-- HikariCP -->
+<!--        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${HikariCP.version}</version>
+        </dependency> -->
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>${dynamic-datasource.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>${p6spy.version}</version>
+        </dependency>
+        <!-- MyBaits plus 插件 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <!-- lombok -->

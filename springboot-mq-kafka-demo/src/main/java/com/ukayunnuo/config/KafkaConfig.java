@@ -28,7 +28,7 @@ public class KafkaConfig {
 
     private static final Integer DEFAULT_PARTITION_NUM = 3;
 
-    private static final String GROUP_ID = "springboot-kafka-demo-batch-manual_immediate";
+    private static final String GROUP_ID = "springboot-mq-kafka-demo-batch-manual_immediate";
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {

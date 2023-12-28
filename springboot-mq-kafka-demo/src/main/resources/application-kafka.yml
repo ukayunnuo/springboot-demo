@@ -11,7 +11,7 @@ spring:
       buffer-memory: 33554432
     # 消费者配置
     consumer:
-      group-id: springboot-kafka-demo
+      group-id: springboot-mq-kafka-demo
       # 手动提交
       enable-auto-commit: false
       auto-offset-reset: latest

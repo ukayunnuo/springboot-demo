@@ -1,4 +1,4 @@
-# springboot-mp-demo
+# springboot-orm-mybatis-plus-demo
 
 #### 介绍
 
@@ -45,7 +45,7 @@ spring:
 
 启动：`DatabaseDemoApp` 启动类后
 
-http测试接口文件：`springboot-mp-demo/http/user-demo-http.http`
+http测试接口文件：`springboot-orm-mybatis-plus-demo/http/user-demo-http.http`
 
 测试用例接口：
 ```http request
