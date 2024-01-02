@@ -64,8 +64,10 @@ public class WebSocketDemoEndpoint {
 
         try {
             Session removeSession = SESSION_POOL.remove(uid);
-            session.close();
-            if (removeSession.isOpen()) {
+            if (session != null) {
+                session.close();
+            }
+            if (removeSession != null && removeSession.isOpen()) {
                 removeSession.close();
             }
             log.info("onClose uid:{}, sessionPool size:{}", uid, SESSION_POOL.size());
