@@ -10,8 +10,8 @@
 <div id="app">
     <el-container>
         <el-header>
-            <el-button @click="_initSockJs" type="success">连接</el-button>
-            <el-button @click="_destroySockJs" type="danger">断开连接</el-button>
+            <el-button @click="connect" type="success">连接</el-button>
+            <el-button @click="close" type="danger">断开连接</el-button>
         </el-header>
         <el-main>
             <el-row>
@@ -55,7 +55,7 @@
 
         methods: {
 
-            _initSockJs() {
+            connect() {
                 this.socket = new WebSocket(ws_url);
 
                 this.socket.onopen = function () {
@@ -87,7 +87,7 @@
 
             },
 
-            _destroySockJs() {
+            close() {
                 this.socket.close();
             },
 
