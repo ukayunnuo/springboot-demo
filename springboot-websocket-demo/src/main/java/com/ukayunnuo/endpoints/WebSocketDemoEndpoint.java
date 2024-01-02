@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/websocket/demo/{uid}")
+@ServerEndpoint(value = "/topic/ws/demo/{uid}")
 public class WebSocketDemoEndpoint {
 
     /**
@@ -38,7 +38,6 @@ public class WebSocketDemoEndpoint {
      */
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "uid") Long uid) {
-
         if (Objects.isNull(uid)) {
             log.warn("onOpen uid is null session:{}", JSONObject.toJSONString(session));
             return;

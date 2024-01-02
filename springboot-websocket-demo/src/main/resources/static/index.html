@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket测试</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-button @click="_initSockJs" type="success">连接</el-button>
+            <el-button @click="_destroySockJs" type="danger">断开连接</el-button>
+        </el-header>
+        <el-main>
+            <el-row>
+                <el-col :span="6">
+                    <el-input
+                            type="textarea"
+                            :rows="2"
+                            placeholder="请输入内容"
+                            v-model="textarea">
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="6">
+                    <el-button @click="sendMsg" type="primary" plain>提交消息</el-button>
+                </el-col>
+            </el-row>
+
+        </el-main>
+    </el-container>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+<script>
+
+    const ws_url = "ws://localhost:8088/topic/ws/demo/1";
+
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                socket: {},
+                textarea: '',
+            }
+        },
+
+        methods: {
+
+            _initSockJs() {
+                this.socket = new WebSocket(ws_url);
+
+                this.socket.onopen = function () {
+                    ELEMENT.Message({
+                        message: '连接服务器成功...',
+                        type: 'success'
+                    });
+                };
+
+                this.socket.onmessage = function (event) {
+                    ELEMENT.Message({
+                        message: '接收服务器消息: ' + event.data,
+                        type: 'success'
+                    });
+                };
+
+                this.socket.onclose = function () {
+                    this.socket = null;
+                    ELEMENT.Message({
+                        message: '连接服务器断开',
+                        type: 'warning'
+                    });
+                };
+
+                this.socket.onerror = function () {
+                    ELEMENT.Message.error('连接服务器失败!');
+                    this.socket = null;
+                };
+
+            },
+
+            _destroySockJs() {
+                this.socket.close();
+            },
+
+            sendMsg() {
+                if (this.socket != null){
+                    this.socket.send(this.textarea);
+                }
+            }
+
+
+        }
+    })
+</script>
+</html>
