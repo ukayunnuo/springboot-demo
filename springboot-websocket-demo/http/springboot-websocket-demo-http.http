@@ -1,0 +1,9 @@
+### 发送消息请求
+POST http://localhost:8088/websocket/demo/sendMsg
+Content-Type: application/json
+
+{
+  "uid": 1,
+  "msg": "测试"
+
+}
