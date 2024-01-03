@@ -10,6 +10,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
+ * Topic 主题模式测试
+ *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2023-09-20
  */
