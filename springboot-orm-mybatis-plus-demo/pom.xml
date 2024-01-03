@@ -26,6 +26,7 @@
         <lombok.version>1.18.28</lombok.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
+        <pagehelper.version>2.1.0</pagehelper.version>
     </properties>
 
     <dependencies>
@@ -104,7 +105,7 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
+            <version>${pagehelper.version}</version>
         </dependency>
 
     </dependencies>

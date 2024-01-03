@@ -16,71 +16,93 @@
 ## pom依赖
 ```xml
 
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter</artifactId>
-</dependency>
-
-<dependency>
-<groupId>org.springframework.boot</groupId>
-<artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-<!-- 热部署插件 -->
-<dependency>
-<groupId>org.springframework.boot</groupId>
-<artifactId>spring-boot-devtools</artifactId>
-<scope>runtime</scope>
-<optional>true</optional>
-</dependency>
-
-<dependency>
-<groupId>mysql</groupId>
-<artifactId>mysql-connector-java</artifactId>
-<version>${mysql-connector.version}</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
-<dependency>
-<groupId>com.baomidou</groupId>
-<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-<version>${dynamic-datasource.version}</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
-<dependency>
-<groupId>p6spy</groupId>
-<artifactId>p6spy</artifactId>
-<version>${p6spy.version}</version>
-</dependency>
-
-<!-- MyBaits plus 插件 -->
-<dependency>
-<groupId>com.baomidou</groupId>
-<artifactId>mybatis-plus-boot-starter</artifactId>
-<version>${mybatis-plus.version}</version>
-</dependency>
-
-<!-- lombok -->
-<dependency>
-<groupId>org.projectlombok</groupId>
-<artifactId>lombok</artifactId>
-<version>${lombok.version}</version>
-</dependency>
-
-<!-- fastjson2 -->
-<dependency>
-<groupId>com.alibaba.fastjson2</groupId>
-<artifactId>fastjson2</artifactId>
-<version>${fastjson2.version}</version>
-</dependency>
-
-<!--    hutool工具类    -->
-<dependency>
-<groupId>cn.hutool</groupId>
-<artifactId>hutool-all</artifactId>
-<version>${hutool.version}</version>
-</dependency>
+<properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <HikariCP.version>4.0.3</HikariCP.version>
+    <dynamic-datasource.version>3.5.0</dynamic-datasource.version>
+    <p6spy.version>3.9.1</p6spy.version>
+    <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+    <mysql-connector.version>8.0.33</mysql-connector.version>
+    <lombok.version>1.18.28</lombok.version>
+    <fastjson2.version>2.0.34</fastjson2.version>
+    <hutool.version>5.8.21</hutool.version>
+    <pagehelper.version>2.1.0</pagehelper.version>
+</properties>
+<dependencys>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+    <!-- 热部署插件 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+        <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-connector.version}</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+    <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        <version>${dynamic-datasource.version}</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
+    <dependency>
+        <groupId>p6spy</groupId>
+        <artifactId>p6spy</artifactId>
+        <version>${p6spy.version}</version>
+    </dependency>
+    
+    <!-- MyBaits plus 插件 -->
+    <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+    </dependency>
+    
+    <!-- lombok -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+    </dependency>
+    
+    <!-- fastjson2 -->
+    <dependency>
+        <groupId>com.alibaba.fastjson2</groupId>
+        <artifactId>fastjson2</artifactId>
+        <version>${fastjson2.version}</version>
+    </dependency>
+    
+    <!--    hutool工具类    -->
+    <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>${hutool.version}</version>
+    </dependency>
+    
+    <!-- pagehelper -->
+    <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.version}</version>
+    </dependency>
+</dependencys>
 
 ```
 ## mybatis-plus 配置
