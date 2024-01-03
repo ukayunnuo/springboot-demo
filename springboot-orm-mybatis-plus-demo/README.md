@@ -105,7 +105,9 @@
 </dependencys>
 
 ```
+
 ## mybatis-plus 配置
+### yaml 配置
 ```yaml
 
 # mybatis-plus 配置
@@ -130,6 +132,73 @@ mybatis-plus:
     # 开启二级缓存
 #    cache-enabled: true
 
+
+```
+### config配置
+```java
+
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * mybatis-plus 配置类
+ *
+ * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
+ * @date 2024-01-03
+ */
+@Configuration
+public class MybatisPlusConfig {
+
+    /**
+     * 插件
+     *
+     * @return {@link MybatisPlusInterceptor}
+     */
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 乐观锁
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        // 分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
+    }
+
+}
+
+```
+
+## pagehelper配置
+```java
+
+import com.github.pagehelper.PageInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * PageHelper 配置类
+ *
+ * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
+ * @date 2024-01-03
+ */
+@Configuration
+public class PageHelperConfig {
+
+    /**
+     * pagehelper 拦截器
+     *
+     * @return {@link PageInterceptor}
+     */
+    @Bean
+    public PageInterceptor pageInterceptor() {
+        return new PageInterceptor();
+    }
+
+}
 
 ```
 
@@ -172,6 +241,7 @@ http测试接口文件：`springboot-orm-mybatis-plus-demo/http/user-demo-http.h
 ```http request
 
 ### 保存用户信息
+### 保存用户信息
 POST http://localhost:8082/demo/user/save
 Content-Type: application/json
 
@@ -183,17 +253,43 @@ Content-Type: application/json
 }
 
 
-### 分页查询用户信息列表
-POST http://localhost:8082/demo/user/page
+### 分页查询(mybatis-plus)用户信息列表
+POST http://localhost:8082/demo/user/pageForMp
 Content-Type: application/json
 
 {
-  "name": "yunnuo"
+  "name": "Tom",
+  "current":1,
+  "size": 2
+}
+
+
+### 分页查询(pagehelper)用户信息列表
+POST http://localhost:8082/demo/user/pageForPageHelper
+Content-Type: application/json
+
+{
+  "name": "Tom",
+  "current":1,
+  "size": 2
 }
 
 
 ### 根据id获取用户信息
 GET http://localhost:8082/demo/user/getById/1
+
+### 响应示例
+# {
+#  "code": 200,
+#  "msg": "操作成功",
+#  "res": {
+#    "id": 1,
+#    "name": "yunnuo",
+#    "age": 23,
+#    "sex": 1,
+#    "email": "2552846359@qq.com"
+#  }
+# }
 
 
 ```
