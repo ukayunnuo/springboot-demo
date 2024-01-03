@@ -1,0 +1,16 @@
+### push key 测试
+POST http://localhost:8087/etcd/demo/pushTest
+Content-Type: application/json
+
+{
+  "key": "yn-demo.test",
+  "value": "测试数据"
+}
+
+### 获取 key 值
+POST http://localhost:8087/etcd/demo/get
+Content-Type: application/json
+
+{
+  "key": "yn-demo.test"
+}
