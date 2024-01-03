@@ -10,12 +10,25 @@ Content-Type: application/json
 }
 
 
-### 分页查询用户信息列表
-POST http://localhost:8082/demo/user/page
+### 分页查询(mybatis-plus)用户信息列表
+POST http://localhost:8082/demo/user/pageForMp
 Content-Type: application/json
 
 {
-  "name": "yunnuo"
+  "name": "Tom",
+  "current":1,
+  "size": 2
+}
+
+
+### 分页查询(pagehelper)用户信息列表
+POST http://localhost:8082/demo/user/pageForPageHelper
+Content-Type: application/json
+
+{
+  "name": "Tom",
+  "current":1,
+  "size": 2
 }
 
 

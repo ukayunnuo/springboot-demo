@@ -3,6 +3,7 @@ package com.ukayunnuo.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.ukayunnuo.core.Result;
 import com.ukayunnuo.domain.entity.User;
 import com.ukayunnuo.domain.request.UserPageReq;
@@ -26,10 +27,15 @@ public class UserDemoController {
     }
 
 
-    @PostMapping("/page")
-    public Result<Page<User>> selectAll(@RequestBody UserPageReq req) {
+    @PostMapping("/pageForMp")
+    public Result<Page<User>> pageForMp(@RequestBody UserPageReq req) {
 
         return Result.success(userService.page(Page.of(req.getCurrent(), req.getSize()), new QueryWrapper<>(BeanUtil.toBean(req, User.class))));
+    }
+
+    @PostMapping("/pageForPageHelper")
+    public Result<PageInfo<User>> pageForPageHelper(@RequestBody UserPageReq req) {
+        return Result.success(userService.getPage(req));
     }
 
     @GetMapping("/getById/{id}")

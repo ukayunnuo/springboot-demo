@@ -4,13 +4,14 @@
 
 本模块利用springBoot 集成了以下功能插件：
 
-- MyBaits plus 插件
+- MyBaits plus orm插件
 - fastjson2
 - lombok
 - hutool工具类
 - HikariCP
 - p6spy
 - dynamic 动态数据库插件
+- pagehelper 分页插件
 
 ## pom依赖
 ```xml
@@ -174,3 +175,6 @@ GET http://localhost:8082/demo/user/getById/1
 
 
 ```
+## 文档
+PageHelper官方文档: https://pagehelper.github.io/docs/howtouse/
+MyBatis-Plus官方文档：https://baomidou.com/

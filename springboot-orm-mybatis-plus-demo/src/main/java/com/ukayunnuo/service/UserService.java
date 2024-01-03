@@ -1,7 +1,9 @@
 package com.ukayunnuo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 import com.ukayunnuo.domain.entity.User;
+import com.ukayunnuo.domain.request.UserPageReq;
 
 /**
  * User 服务接口
@@ -18,4 +20,6 @@ public interface UserService extends IService<User> {
      * @return {@link Long} 用户 id
      */
     Long saveUserInfo(User user);
+
+    PageInfo<User> getPage(UserPageReq req);
 }
