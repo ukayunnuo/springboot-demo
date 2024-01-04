@@ -1,7 +1,14 @@
 package com.ukayunnuo.interceptor;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import com.alibaba.fastjson2.JSONObject;
+import com.ukayunnuo.config.JwtConfig;
+import com.ukayunnuo.core.Result;
 import com.ukayunnuo.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,23 +26,42 @@ import java.util.List;
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2024-01-04
  */
+@Slf4j
 public class JwtInterceptor implements HandlerInterceptor {
 
+    @Resource
+    private JwtUtil jwtUtil;
 
-    private static final List<String> WHITE_TOKEN_URI_LIST = Arrays.asList("/demo");
+    @Resource
+    private JwtConfig jwtConfig;
 
     private final AntPathMatcher matcher = new AntPathMatcher();
 
 
-    @Resource
-    private JwtUtil jwtUtil;
+
+
+
+    private List<String> getWhiteTokenUrlArray() {
+        List<String> whiteTokenUrlList =new ArrayList<>(Arrays.asList(
+                "/jwt/demo/login"
+        ));
+
+        List<String> whiteTokenUri = jwtConfig.getWhiteTokenUri();
+
+        if (CollUtil.isNotEmpty(whiteTokenUri)){
+            whiteTokenUrlList.addAll(whiteTokenUri);
+        }
+
+        return whiteTokenUrlList;
+    }
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestUri = request.getRequestURI();
 
-        if (isMatchUri(requestUri, WHITE_TOKEN_URI_LIST)){
+        if (isMatchUri(requestUri, getWhiteTokenUrlArray())){
             return true;
         }
 
@@ -43,6 +70,11 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         // 验证token，如果无效或过期，返回false，请求被中断
         if (token == null || Boolean.FALSE.equals(jwtUtil.isValidToken(token))) {
+            log.warn("The verification token failure! token:{}", token);
+            ServletUtil.write(response,
+                    JSONObject.toJSONString(Result.error(HttpStatus.BAD_REQUEST.value(), "The verification token failure!")),
+                    "application/json");
+
             return false;
         }
 
@@ -51,12 +83,12 @@ public class JwtInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         // 在请求处理后执行的操作
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         // 在请求完成后的操作
     }
 

@@ -38,7 +38,7 @@ public class JwtUtil {
     @Resource
     private JwtConfig jwtConfig;
 
-    @Resource()
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
     /**

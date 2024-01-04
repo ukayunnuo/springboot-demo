@@ -1,9 +1,12 @@
+### 测试token 白名单
+POST http://localhost:8089/jwt/demo/whiteTokenTest
+
 ### 登录获取token测试
 POST http://localhost:8089/jwt/demo/login
 Content-Type: application/json
 
 {
-  "uid": 2,
+  "uid": 1,
   "userName": "yunnuo"
 }
 

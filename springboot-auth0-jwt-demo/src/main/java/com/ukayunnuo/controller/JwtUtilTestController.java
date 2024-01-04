@@ -25,6 +25,12 @@ public class JwtUtilTestController {
     @Resource
     private JwtUtil jwtUtil;
 
+    @PostMapping("/whiteTokenTest")
+    public Result<String> whiteTokenDemo(){
+        log.info("whiteTokenTest is success!");
+        return Result.success("OK");
+    }
+
 
     @PostMapping("/login")
     public Result<String> getToken(@RequestBody LoginReq loginReq){

@@ -2,6 +2,9 @@ package com.ukayunnuo.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * JWT 配置类
@@ -10,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2024-01-03
  */
 @Data
+@Configuration
 @ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
 
@@ -27,5 +31,10 @@ public class JwtConfig {
      * 认证 header头的对应认证token字段
      */
     private String authentication = "Authorization";
+
+    /**
+     * token 白名单 url
+     */
+    private List<String> whiteTokenUri;
 
 }
