@@ -160,18 +160,22 @@ public class JwtUtil {
             Map<String, Claim> claimMap = parseToken(token);
 
             // 验证过期时间
-            long expAt = claimMap.get("exp").as(Long.class) * 1000L;
+            Claim expCla = claimMap.get("exp");
+
+            if (expCla == null){
+                return false;
+            }
+
+            long expAt = expCla.as(Long.class) * 1000L;
             if (System.currentTimeMillis() > expAt) {
                 return false;
             }
 
-            // 验证签名算法
-            String algorithm = claimMap.get("alg").asString();
-            if (algorithm == null || algorithm.isEmpty() || Boolean.FALSE.equals(algorithm.equals(jwtConfig.getKey()))) {
+            Claim uidCla = claimMap.get("iss");
+            if (uidCla == null || uidCla.asString().isEmpty()) {
                 return false;
             }
-
-            String redisKey = RedisKey.JWT_TOKEN.makeRedisKey(claimMap.get("id").asString());
+            String redisKey = RedisKey.JWT_TOKEN.makeRedisKey(uidCla.asString());
 
             // 校验redis中的JWT是否存在
             if (Boolean.FALSE.equals(stringRedisTemplate.hasKey(redisKey))) {

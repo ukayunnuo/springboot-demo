@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-@RequestMapping("/jwt/demo")
+@RequestMapping("/auth0/jwt/demo")
 public class JwtUtilTestController {
 
     @Resource
@@ -31,12 +31,9 @@ public class JwtUtilTestController {
         return Result.success("OK");
     }
 
-
     @PostMapping("/login")
     public Result<String> getToken(@RequestBody LoginReq loginReq){
-        Result<String> result = new Result<>();
-        result.setRes(jwtUtil.createJwtToken(loginReq.getUid(), loginReq.getUserName()));
-        return result;
+        return Result.success(jwtUtil.createJwtToken(loginReq.getUid(), loginReq.getUserName()));
     }
 
     @PostMapping("/getUserInfo")

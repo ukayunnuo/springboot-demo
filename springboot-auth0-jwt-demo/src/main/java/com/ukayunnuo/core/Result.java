@@ -35,7 +35,7 @@ public class Result<T> implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date serverTime;
-    
+
     private long serverTimestamp;
 
 
@@ -77,8 +77,8 @@ public class Result<T> implements Serializable {
      *
      * @return 成功消息
      */
-    public static <T> Result<T> success() {
-        return Result.success("Successful operation!");
+    public static Result<Boolean> success() {
+        return Result.success("Successful operation!", Boolean.TRUE);
     }
 
     /**
@@ -90,16 +90,6 @@ public class Result<T> implements Serializable {
         return Result.success("Successful operation!", res);
     }
 
-
-    /**
-     * 返回成功消息
-     *
-     * @param msg 返回内容
-     * @return 成功消息
-     */
-    public static <T> Result<T> success(String msg) {
-        return Result.success(msg, null);
-    }
 
     /**
      * 返回成功消息

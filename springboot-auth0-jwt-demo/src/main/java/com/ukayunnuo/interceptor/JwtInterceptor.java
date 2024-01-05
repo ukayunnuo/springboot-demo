@@ -39,11 +39,9 @@ public class JwtInterceptor implements HandlerInterceptor {
 
 
 
-
-
     private List<String> getWhiteTokenUrlArray() {
         List<String> whiteTokenUrlList =new ArrayList<>(Arrays.asList(
-                "/jwt/demo/login"
+                "/auth0/jwt/demo/login"
         ));
 
         List<String> whiteTokenUri = jwtConfig.getWhiteTokenUri();

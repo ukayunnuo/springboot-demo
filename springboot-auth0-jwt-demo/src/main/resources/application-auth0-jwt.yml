@@ -8,7 +8,7 @@ jwt:
   expire-at: 1800
   # token 白名单 url
   white-token-uri:
-    - /jwt/demo/whiteTokenTest
+    - /auth0/jwt/demo/whiteTokenTest
 
 # redis配置
 spring:
