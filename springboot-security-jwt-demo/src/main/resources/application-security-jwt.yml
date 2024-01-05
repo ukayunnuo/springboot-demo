@@ -1,11 +1,14 @@
 # jwt 配置
 jwt:
   # 加密key
-  key: "ukayunnuo"
-  # 过期时间 30 分钟
-  ttl: 1800000
+  key: "eXVubnVveXVubnVveXVubnVveXVubnVveXVubnVvMDA="
   # 认证header头 字段
   authentication: "Authorization"
+  # 过期时间 30 分钟 (单位：秒)
+  expire-at: 1800
+  # token 白名单 url
+  white-token-uri:
+    - /security/jwt/demo/whiteTokenTest
 
 # redis配置
 spring:

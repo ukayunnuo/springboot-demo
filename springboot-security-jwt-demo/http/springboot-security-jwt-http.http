@@ -1,16 +1,19 @@
+### 测试token 白名单
+POST http://localhost:8090/security/jwt/demo/whiteTokenTest
+
 ### 登录获取token测试
-POST http://localhost:8089/jwt/demo/login
+POST http://localhost:8090/security/jwt/demo/login
 Content-Type: application/json
 
 {
-  "uid": 2,
+  "uid": 1,
   "userName": "yunnuo"
 }
 
 ### 根据token获取用户信息
-POST http://localhost:8089/jwt/demo/getUserInfo
+POST http://localhost:8090/security/jwt/demo/getUserInfo
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyIiwiaXNzIjoiMiIsInN1YiI6Inl1bm51byIsInVzZXJOYW1lIjoieXVubnVvIiwidG9rZW5EYXRhIjp7InVpZCI6MiwidXNlck5hbWUiOiJ5dW5udW8ifSwiZXhwIjoxNzA0MzY2MjQwfQ.IhCJ1Kprq1pp_wIz0wmsq-jPOk6_UuqHfNmhq7aYuYA
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoieXVubnVvIiwiaWF0IjoxNzA0NDUxNDkxLCJ1aWQiOjEsInVzZXJOYW1lIjoieXVubnVvIiwiZXhwIjoxNzA0NDUzMjkxfQ.ECF1-UhNq4mmIxZacNfoNTJHWwb4SpAIqYnCxVnYcoQ
 
 {
   "uid": 1,
