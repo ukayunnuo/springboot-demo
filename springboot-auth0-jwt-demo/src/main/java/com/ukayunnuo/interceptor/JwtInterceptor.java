@@ -55,7 +55,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         String requestUri = request.getRequestURI();
 
@@ -69,6 +69,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 验证token，如果无效或过期，返回false，请求被中断
         if (token == null || Boolean.FALSE.equals(jwtUtil.isValidToken(token))) {
             log.warn("The verification token failure! token:{}", token);
+            response.setCharacterEncoding("UTF-8");
             ServletUtil.write(response,
                     JSONObject.toJSONString(Result.error(HttpStatus.BAD_REQUEST.value(), "The verification token failure!")),
                     "application/json");
