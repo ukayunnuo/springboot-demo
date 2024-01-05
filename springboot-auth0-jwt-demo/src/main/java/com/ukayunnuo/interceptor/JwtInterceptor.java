@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 过滤器
+ * JWT 拦截器
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
  * @date 2024-01-04
