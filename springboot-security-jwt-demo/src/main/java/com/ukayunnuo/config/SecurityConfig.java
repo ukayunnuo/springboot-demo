@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -87,6 +88,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 // 匿名
                 .antMatchers(
+                        "/security/jwt/demo/login",
                         "/security/anonymous1",
                         "/security/anonymous12"
                 ).anonymous()
@@ -111,6 +113,11 @@ public class SecurityConfig {
                 "/ignore2"
         );
 
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
