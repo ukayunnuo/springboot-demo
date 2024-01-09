@@ -9,6 +9,7 @@ import com.ukayunnuo.domain.model.LoginUser;
 import com.ukayunnuo.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -51,7 +52,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     response.setCharacterEncoding("UTF-8");
                     ServletUtil.write(response,
                             JSONObject.toJSONString(Result.error(HttpStatus.BAD_REQUEST.value(), "The verification token failure!")),
-                            "application/json");
+                            MediaType.APPLICATION_JSON_VALUE);
                 }
 
                 LoginUser loginUser = new LoginUser(tokenData.getUid(), tokenData.getUserName());

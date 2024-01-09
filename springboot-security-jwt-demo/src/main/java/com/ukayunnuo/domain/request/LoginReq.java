@@ -15,4 +15,6 @@ public class LoginReq {
 
     private String userName;
 
+    private String password;
+
 }

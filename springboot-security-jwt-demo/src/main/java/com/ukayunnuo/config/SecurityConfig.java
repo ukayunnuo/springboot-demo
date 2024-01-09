@@ -32,6 +32,7 @@ import javax.annotation.Resource;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
+
     /**
      * 自定义用户认证逻辑
      */
@@ -59,22 +60,27 @@ public class SecurityConfig {
     @Resource
     private CorsFilter corsFilter;
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         LogoutConfigurer<HttpSecurity> httpSecurityLogoutConfigurer = httpSecurity
                 // CSRF禁用
                 .csrf().disable()
+                // 自定义登录路径
+                .formLogin().loginProcessingUrl("/security/jwt/demo/login")
+                .usernameParameter("userName")
+                .passwordParameter("password")
+                .permitAll().and()
                 // 认证失败处理
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 // 基于token 认证
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .userDetailsService(userDetailsService)
                 // 添加过滤器 jwt
                 .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 // 添加CORS filter
                 .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class)
                 .addFilterBefore(corsFilter, LogoutFilter.class)
-                .logout().logoutSuccessHandler(logoutSuccessHandler);
+                .logout().logoutUrl("/security/jwt/demo/logout").logoutSuccessHandler(logoutSuccessHandler);
 
         // 白名单
         httpSecurityLogoutConfigurer.and()
@@ -88,11 +94,11 @@ public class SecurityConfig {
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
+                        "/favicon*",
                         "/*.html"
                 ).permitAll()
                 // 除去白名单都需要进行认证
                 .anyRequest().authenticated().and().headers().frameOptions().disable();
-        ;
 
         return httpSecurity.build();
     }
@@ -106,4 +112,5 @@ public class SecurityConfig {
         );
 
     }
+
 }

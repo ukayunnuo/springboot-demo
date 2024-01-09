@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.core.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -24,10 +25,10 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) {
-        log.info("AuthenticationEntryPoint Authentication failure! url:{}, param:{}, errorMsg:{}", request.getRequestURI(), JSONObject.toJSONString(request.getParameterMap()), e.getMessage());
+        log.warn("AuthenticationEntryPoint Authentication failure! url:{}, param:{}, errorMsg:{}", request.getRequestURI(), JSONObject.toJSONString(request.getParameterMap()), e.getMessage());
         response.setCharacterEncoding("UTF-8");
         ServletUtil.write(response,
                 JSONObject.toJSONString(Result.error(HttpStatus.UNAUTHORIZED.value(), "Authentication failure, Unable to access system resources!")),
-                "application/json");
+                MediaType.APPLICATION_JSON_VALUE);
     }
 }

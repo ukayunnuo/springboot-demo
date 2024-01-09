@@ -5,6 +5,7 @@ import com.ukayunnuo.domain.model.LoginUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,12 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // todo: 通过用户唯一表示查询用户数据, 此处省略....
-
-        return new LoginUser(Long.parseLong(username), "yunnuo");
+        String password = new BCryptPasswordEncoder().encode("123");
+        return new LoginUser(Long.parseLong(username), "yunnuo", password);
 
     }
+
 }

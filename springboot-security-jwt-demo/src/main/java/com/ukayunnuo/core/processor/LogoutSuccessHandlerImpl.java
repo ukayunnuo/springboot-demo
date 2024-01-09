@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.core.Result;
 import com.ukayunnuo.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         response.setCharacterEncoding("UTF-8");
         ServletUtil.write(response,
                 JSONObject.toJSONString(Result.success("Log out Success!")),
-                "application/json");
+                MediaType.APPLICATION_JSON_VALUE);
     }
 
 }

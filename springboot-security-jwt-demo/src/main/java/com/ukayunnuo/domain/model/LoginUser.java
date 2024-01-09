@@ -47,6 +47,12 @@ public class LoginUser implements UserDetails {
         this.username = username;
     }
 
+    public LoginUser(Long userId, String username, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+    }
+
     /**
      * 用户是否过期
      *
