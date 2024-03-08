@@ -44,7 +44,7 @@ public class EtcdKeyWatcher {
     }
 
     /**
-     * 监听并存储到缓存
+     * 监听并处理本地服务缓存
      *
      * @param key 配置key
      * @return 监听结果
@@ -78,6 +78,13 @@ public class EtcdKeyWatcher {
             for (WatchEvent event : res.getEvents()) {
                 log.info("Watch.listener event:{}", JSONObject.toJSONString(event));
                 KeyValue keyValue = event.getKeyValue();
+
+                if (event.getEventType().equals(WatchEvent.EventType.DELETE)){
+                    watchedKeysCache.evictIfPresent(keyValue.getKey());
+                    log.info("watchClient.watch remove key:{}", key);
+                    continue;
+                }
+
                 if (Objects.nonNull(keyValue)) {
                     // 将监听的键缓存到本地缓存中
                     watchedKeysCache.put(keyValue.getKey().toString(StandardCharsets.UTF_8), keyValue.getValue().toString(StandardCharsets.UTF_8));
