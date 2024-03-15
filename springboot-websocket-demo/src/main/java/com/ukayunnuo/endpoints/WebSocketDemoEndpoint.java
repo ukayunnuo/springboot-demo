@@ -8,10 +8,9 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * websocket 测试 endpoint
@@ -27,7 +26,7 @@ public class WebSocketDemoEndpoint {
     /**
      * 连接数量池
      */
-    private static final Map<Long, Session> SESSION_POOL = new HashMap<>();
+    private static final ConcurrentHashMap<Long, Session> SESSION_POOL = new ConcurrentHashMap<>();
 
 
     /**
