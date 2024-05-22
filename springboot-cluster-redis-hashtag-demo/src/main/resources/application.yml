@@ -1,0 +1,12 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: springboot-cluster-redis-hashtag-demo
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  profiles:
+    active:
+      - redis-cluster
