@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/demo/redis")
 public class RedisDemoController {
 
-    @Resource
+    @Autowired(required = false)
     private JedisCommands jedisCommands;
 
     @Autowired(required = false)

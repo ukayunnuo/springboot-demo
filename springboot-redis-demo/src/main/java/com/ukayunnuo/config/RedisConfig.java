@@ -1,6 +1,7 @@
 package com.ukayunnuo.config;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,8 @@ import redis.clients.jedis.commands.JedisCommands;
 import redis.clients.jedis.exceptions.JedisDataException;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,14 +61,18 @@ public class RedisConfig {
     @Lazy
     @Bean
     public JedisCommands jedisCommands() {
-        if (StrUtil.isNotBlank(properties.getHost())) {
-            return new Jedis(new HostAndPort(properties.getHost(), properties.getPort()),
-                    DefaultJedisClientConfig.builder()
-                            .connectionTimeoutMillis((int) properties.getTimeout().toMillis())
-                            .password(properties.getPassword())
-                            .database(properties.getDatabase())
-                            .ssl(properties.isSsl()).build()
-            );
+        try {
+            if (StrUtil.isNotBlank(properties.getHost())) {
+                return new Jedis(new HostAndPort(properties.getHost(), properties.getPort()),
+                        DefaultJedisClientConfig.builder()
+                                .connectionTimeoutMillis((int) properties.getTimeout().toMillis())
+                                .password(properties.getPassword())
+                                .database(properties.getDatabase())
+                                .ssl(properties.isSsl()).build()
+                );
+            }
+        } catch (Exception e) {
+            log.error("redis jedisCommands init properties:{}, error:{}", JSONObject.toJSONString(properties),  e.getMessage(), e);
         }
         return null;
     }
@@ -73,30 +80,46 @@ public class RedisConfig {
     @Lazy
     @Bean
     public JedisClusterCommands jedisClusterCommands() {
+        return jedisCluster();
+    }
+
+    @Lazy
+    @Bean
+    public JedisCluster jedisCluster() {
         RedisProperties.Cluster cluster = properties.getCluster();
-        JedisPoolConfig config = getJedisPoolConfig();
-        if (Objects.isNull(cluster)) {
-            if (StrUtil.isBlank(properties.getHost())) {
-                throw new RedisConnectionFailureException("redis config param deficiency! Verify the configuration and try again.");
+        JedisCluster jedisCluster;
+        Set<HostAndPort> nodes;
+        try {
+            if (Objects.isNull(cluster)) {
+                if (StrUtil.isBlank(properties.getHost())) {
+                    throw new RedisConnectionFailureException("redis config param deficiency! Verify the configuration and try again.");
+                }
+                nodes = new HashSet<>(Collections.singleton(new HostAndPort(properties.getHost(), properties.getPort())));
+            } else {
+                nodes = cluster.getNodes().stream().map(item -> {
+                    String[] split = item.split(":");
+                    return new HostAndPort(split[0], Integer.parseInt(split[1]));
+                }).collect(Collectors.toSet());
             }
-            try {
-                return new JedisCluster(new HostAndPort(properties.getHost(), properties.getPort()),
-                        (int) properties.getTimeout().getSeconds(),
-                        (int) properties.getTimeout().getSeconds(),
-                        DEFAULT_MAX_ATTEMPTS, properties.getPassword(),
-                        config);
-            } catch (JedisDataException e) {
-                log.error("RedisConfig --> new JedisCluster error! e:{}", e.getMessage());
-                return null;
-            }
+            jedisCluster = assembleJedisCluster(nodes);
+            log.info("RedisConfig --> jedisCluster init... nodes:{}, config:{}", JSONObject.toJSONString(nodes), JSONObject.toJSONString(getJedisPoolConfig()));
+        } catch (JedisDataException e) {
+            log.error("RedisConfig --> new JedisCluster error! e:{}", e.getMessage());
+            return null;
         }
-        Set<HostAndPort> nodes = cluster.getNodes().stream().map(item -> {
-            String[] split = item.split(":");
-            return new HostAndPort(split[0], Integer.parseInt(split[1]));
-        }).collect(Collectors.toSet());
+        return jedisCluster;
+    }
+
+    public JedisCluster assembleJedisCluster(Set<HostAndPort> nodes) {
+        JedisPoolConfig config = getJedisPoolConfig();
+        if (StrUtil.isBlank(properties.getPassword())) {
+            return new JedisCluster(nodes,
+                    (int) properties.getTimeout().getSeconds() * 1000,
+                    DEFAULT_MAX_ATTEMPTS, config);
+        }
         return new JedisCluster(nodes,
-                (int) properties.getTimeout().getSeconds(),
-                (int) properties.getTimeout().getSeconds(),
+                (int) properties.getTimeout().getSeconds() * 1000,
+                (int) properties.getTimeout().getSeconds() * 1000,
                 DEFAULT_MAX_ATTEMPTS, properties.getPassword(),
                 config);
     }
