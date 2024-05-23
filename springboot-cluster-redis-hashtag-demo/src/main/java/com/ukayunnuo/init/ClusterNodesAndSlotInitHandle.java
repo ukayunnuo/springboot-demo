@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.commands.JedisClusterCommands;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -46,9 +45,6 @@ public class ClusterNodesAndSlotInitHandle {
     @Resource
     private JedisCluster jedisCluster;
 
-    @Resource
-    private JedisClusterCommands jedisClusterCommands;
-
     private final GetNodeFunction getNodeFunction = new GetNodeFunction();
 
     @PostConstruct
@@ -62,8 +58,8 @@ public class ClusterNodesAndSlotInitHandle {
             Map<String, String> nodeSlotMapping = initNodeSlotMapping();
 
             // 获取之前存储在redis中的 集群节点与 pool key 映射
-            Map<String, String> nodeSlotMappingCacheMap = jedisClusterCommands.hgetAll(RedisKey.NODE_SLOT_MAPPING.getPrefix());
-            Map<String, String> HashTagKeyMapMappingCacheMap = jedisClusterCommands.hgetAll(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix());
+            Map<String, String> nodeSlotMappingCacheMap = jedisCluster.hgetAll(RedisKey.NODE_SLOT_MAPPING.getPrefix());
+            Map<String, String> HashTagKeyMapMappingCacheMap = jedisCluster.hgetAll(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix());
 
             if (MapUtil.isEmpty(nodeSlotMappingCacheMap)) {
                 Map<String, String> hashTagKeyMapMapping = initHashTagKeyMapMapping(nodeSlotMapping);
@@ -76,8 +72,8 @@ public class ClusterNodesAndSlotInitHandle {
                 NODE_SLOT_MAPPING = nodeSlotMappingCacheMap;
                 NODE_HASHTAG_KEY_MAPPING = HashTagKeyMapMappingCacheMap;
                 // 更新缓存过期时间
-                jedisClusterCommands.expire(RedisKey.NODE_SLOT_MAPPING.getPrefix(), RedisKey.NODE_SLOT_MAPPING.expireTime());
-                jedisClusterCommands.expire(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), RedisKey.NODE_HASHTAG_KEY_MAPPING.expireTime());
+                jedisCluster.expire(RedisKey.NODE_SLOT_MAPPING.getPrefix(), RedisKey.NODE_SLOT_MAPPING.expireTime());
+                jedisCluster.expire(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), RedisKey.NODE_HASHTAG_KEY_MAPPING.expireTime());
             } else {
                 Map<String, String> hashTagKeyMapMapping = initHashTagKeyMapMapping(nodeSlotMapping);
                 setInitCache(nodeSlotMapping, hashTagKeyMapMapping);
@@ -86,17 +82,18 @@ public class ClusterNodesAndSlotInitHandle {
         } catch (Exception e) {
             flag = Boolean.FALSE;
             log.error("ClusterNodesAndSlotInitHandle init error! e:{}", e.getMessage(), e);
+            throw e;
         } finally {
             log.info("ClusterNodesAndSlotInitHandle init end! flag:{}, NODE_SLOT_MAPPING:{}, NODE_POOL_KEY_MAPPING:{} cost：{}ms", flag, JSONObject.toJSONString(NODE_SLOT_MAPPING), JSONObject.toJSONString(NODE_HASHTAG_KEY_MAPPING), System.currentTimeMillis() - start);
         }
     }
 
     private void setInitCache(Map<String, String> nodeSlotMapping, Map<String, String> hashTagKeyMapMapping) {
-        jedisClusterCommands.hmset(RedisKey.NODE_SLOT_MAPPING.getPrefix(), nodeSlotMapping);
-        jedisClusterCommands.expire(RedisKey.NODE_SLOT_MAPPING.getPrefix(), RedisKey.NODE_SLOT_MAPPING.expireTime());
+        jedisCluster.hmset(RedisKey.NODE_SLOT_MAPPING.getPrefix(), nodeSlotMapping);
+        jedisCluster.expire(RedisKey.NODE_SLOT_MAPPING.getPrefix(), RedisKey.NODE_SLOT_MAPPING.expireTime());
 
-        jedisClusterCommands.hmset(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), hashTagKeyMapMapping);
-        jedisClusterCommands.expire(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), RedisKey.NODE_HASHTAG_KEY_MAPPING.expireTime());
+        jedisCluster.hmset(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), hashTagKeyMapMapping);
+        jedisCluster.expire(RedisKey.NODE_HASHTAG_KEY_MAPPING.getPrefix(), RedisKey.NODE_HASHTAG_KEY_MAPPING.expireTime());
 
         NODE_SLOT_MAPPING = nodeSlotMapping;
         NODE_HASHTAG_KEY_MAPPING = hashTagKeyMapMapping;

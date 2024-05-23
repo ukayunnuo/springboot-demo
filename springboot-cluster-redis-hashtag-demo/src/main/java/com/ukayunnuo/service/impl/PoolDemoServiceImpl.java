@@ -11,7 +11,7 @@ import com.ukayunnuo.utils.PoolShardingKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.commands.JedisClusterCommands;
+import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -39,7 +39,7 @@ public class PoolDemoServiceImpl implements PoolDemoService {
     private SlotHashTagHandler slotHashTagHandler;
 
     @Resource
-    private JedisClusterCommands jedisClusterCommands;
+    private JedisCluster jedisCluster;
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
@@ -73,7 +73,7 @@ public class PoolDemoServiceImpl implements PoolDemoService {
             log.error("getPoolData error! uid:{}, e:{}", uid, e.getMessage(), e);
             // 移除本次用户累计拉取数据
             if (CollUtil.isNotEmpty(poolData)) {
-                jedisClusterCommands.srem(userAcquiredPoolDataListKey, poolData.toArray(new String[0]));
+                jedisCluster.srem(userAcquiredPoolDataListKey, poolData.toArray(new String[0]));
             }
             throw e;
         }
@@ -96,7 +96,7 @@ public class PoolDemoServiceImpl implements PoolDemoService {
         // 按照各个池子进行分片后的redis存在的 hashTagKey
         List<String> redisKeys = poolShardingKeyStrategy.getShardingKeys().stream()
                 .map(poolShardingKey -> PoolShardingKeyUtil.getHashtagPoolShardingKey(poolShardingKey, hashTagKey))
-                .filter(jedisClusterCommands::exists).collect(Collectors.toList());
+                .filter(jedisCluster::exists).collect(Collectors.toList());
 
         // 进行diff操作
         for (String redisKey : redisKeys) {
