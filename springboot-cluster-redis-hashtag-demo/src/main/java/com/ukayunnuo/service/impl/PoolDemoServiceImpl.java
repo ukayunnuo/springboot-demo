@@ -1,6 +1,7 @@
 package com.ukayunnuo.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.core.RedisKey;
 import com.ukayunnuo.enums.PoolType;
 import com.ukayunnuo.handle.SlotHashTagHandler;
@@ -77,6 +78,7 @@ public class PoolDemoServiceImpl implements PoolDemoService {
             }
             throw e;
         }
+        log.info("getPoolData uid:{}, hashTagKey:{}, res:{}", uid, hashTagKey, JSONObject.toJSONString(poolData));
         return poolData;
     }
 
@@ -100,7 +102,7 @@ public class PoolDemoServiceImpl implements PoolDemoService {
 
         // 进行diff操作
         for (String redisKey : redisKeys) {
-            Optional.ofNullable(redisTemplate.opsForSet().difference(redisKey, userAcquiredPoolDataListKey)).ifPresent(res::addAll);
+            Optional.ofNullable(jedisCluster.sdiff(redisKey, userAcquiredPoolDataListKey)).ifPresent(res::addAll);
             if (res.size() >= poolType.pullNumberLimit) {
                 break;
             }
@@ -117,6 +119,4 @@ public class PoolDemoServiceImpl implements PoolDemoService {
 
         return shuffleFunction.apply(res, limit);
     }
-
-
 }

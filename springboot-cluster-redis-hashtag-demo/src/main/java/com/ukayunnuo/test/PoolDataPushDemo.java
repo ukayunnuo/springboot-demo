@@ -1,6 +1,7 @@
 package com.ukayunnuo.test;
 
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.enums.PoolType;
 import com.ukayunnuo.init.ClusterNodesAndSlotInitHandle;
 import com.ukayunnuo.strategy.PoolShardingKeyFactory;
@@ -30,6 +31,7 @@ public class PoolDataPushDemo {
     private JedisClusterCommands jedisClusterCommands;
 
 
+    // todo: 存储redis数据测试方法，需要开启@PostConstruct
     // @PostConstruct
     public void exec() {
         log.info("PoolDataPushDemo start!");
@@ -62,7 +64,9 @@ public class PoolDataPushDemo {
     }
 
     public void sync(PoolType poolType, String poolShardingKey){
+        // 各个节点对应的hashtag 映射
         Map<String, String> map = ClusterNodesAndSlotInitHandle.NODE_HASHTAG_KEY_MAPPING;
+        List<String> hashTagRedisKeys = new ArrayList<>();
         // 将sharding key 同步到 各个 hashtag key中
         map.values().forEach(hashtag -> {
             String redisKey = PoolShardingKeyUtil.getHashtagPoolShardingKey(poolShardingKey, hashtag);
@@ -77,9 +81,8 @@ public class PoolDataPushDemo {
                 jedisClusterCommands.sadd(redisKey, members);
             }
             jedisClusterCommands.expire(redisKey, poolType.expire);
+            hashTagRedisKeys.add(redisKey);
         });
-
+        log.info("pool data sync poolShardingKey-> {}, poolType-> {}, 同步的对应hashtag keys:{}", poolShardingKey, poolType, JSONObject.toJSONString(hashTagRedisKeys));
     }
-
-
 }

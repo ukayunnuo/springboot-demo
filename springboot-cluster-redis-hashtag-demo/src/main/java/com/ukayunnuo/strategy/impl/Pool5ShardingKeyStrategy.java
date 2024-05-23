@@ -1,6 +1,7 @@
 package com.ukayunnuo.strategy.impl;
 
 import com.ukayunnuo.core.RedisKey;
+import com.ukayunnuo.enums.PoolType;
 import com.ukayunnuo.enums.poolsharding.Pool5Sharding;
 import com.ukayunnuo.enums.poolsharding.PoolShardingType;
 import com.ukayunnuo.strategy.PoolShardingKeyStrategy;
@@ -20,7 +21,7 @@ public class Pool5ShardingKeyStrategy implements PoolShardingKeyStrategy {
     @Override
     public List<String> getShardingKeys() {
         return Arrays.stream(Pool5Sharding.values()).map(item ->
-                RedisKey.DATA_POOL.makeRedisKey(item.type.toString())).collect(Collectors.toList());
+                RedisKey.DATA_POOL.makeRedisKey(PoolType.POOL_5.name, item.type.toString())).collect(Collectors.toList());
     }
 
     @Override
@@ -29,6 +30,6 @@ public class Pool5ShardingKeyStrategy implements PoolShardingKeyStrategy {
         if (sharding == null){
             return null;
         }
-        return RedisKey.DATA_POOL.makeRedisKey(sharding.toString());
+        return RedisKey.DATA_POOL.makeRedisKey(PoolType.POOL_5.name, sharding.toString());
     }
 }

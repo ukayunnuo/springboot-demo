@@ -3,7 +3,6 @@ package com.ukayunnuo.init;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.ukayunnuo.core.ErrorCode;
 import com.ukayunnuo.core.RedisKey;
@@ -113,7 +112,7 @@ public class ClusterNodesAndSlotInitHandle {
                     log.error("initNodeSlotMapping 解析slotInfo失败! clusterNodes:{}, slotInfo:{}", JSONObject.toJSONString(clusterNodes), JSONObject.toJSONString(slotInfo));
                     throw new ServiceException(ErrorCode.SYSTEM_ERROR.getCode(), "解析slotInfo失败！");
                 }
-                List<Object> slot = JSONArray.parseArray(JSONObject.toJSONString(slotInfo), Object.class);
+                List<Object> slot = (List<Object>) slotInfo;
                 long startSlot = NumberUtil.parseLong(slot.get(0).toString());
                 long endSlot = NumberUtil.parseLong(slot.get(1).toString());
 
@@ -121,9 +120,9 @@ public class ClusterNodesAndSlotInitHandle {
                     log.error("initNodeSlotMapping 解析slotInfo[2]失败! clusterNodes:{}, slotInfo:{}", JSONObject.toJSONString(clusterNodes), JSONObject.toJSONString(slotInfo));
                     throw new ServiceException(ErrorCode.SYSTEM_ERROR.getCode(), "解析slotInfo失败！");
                 }
-                List<String> nodeInfo = JSONArray.parseArray(JSONObject.toJSONString(slot.get(2)), String.class);
-                String nodeIp = nodeInfo.get(0);
-                long nodePort = NumberUtil.parseLong(nodeInfo.get(1));
+                List<Object> nodeInfo = (List<Object>) slot.get(2);
+                String nodeIp = new String((byte[]) nodeInfo.get(0));
+                long nodePort = NumberUtil.parseLong(nodeInfo.get(1).toString());
                 // key格式：nodeIp:nodePort, value 格式：startSlot,endSlot
                 nodeSlotMapping.put(String.format("%s:%s", nodeIp, nodePort), String.format("%s,%s", startSlot, endSlot));
             }

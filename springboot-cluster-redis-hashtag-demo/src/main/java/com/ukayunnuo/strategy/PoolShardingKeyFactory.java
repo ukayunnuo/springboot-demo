@@ -4,8 +4,7 @@ package com.ukayunnuo.strategy;
 import com.ukayunnuo.core.ErrorCode;
 import com.ukayunnuo.core.exception.ServiceException;
 import com.ukayunnuo.enums.PoolType;
-import com.ukayunnuo.strategy.impl.Pool1ShardingKeyStrategy;
-import com.ukayunnuo.strategy.impl.Pool2ShardingKeyStrategy;
+import com.ukayunnuo.strategy.impl.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * 数据池 分片策略工厂
  *
  * @author yunnuo
  * @date 2024-02-22
@@ -32,9 +31,9 @@ public class PoolShardingKeyFactory {
         HashMap<PoolType, PoolShardingKeyStrategy> map = new HashMap<>(PoolType.values().length);
         map.put(PoolType.POOL_1, new Pool1ShardingKeyStrategy());
         map.put(PoolType.POOL_2, new Pool2ShardingKeyStrategy());
-        map.put(PoolType.POOL_3, new Pool1ShardingKeyStrategy());
-        map.put(PoolType.POOL_4, new Pool1ShardingKeyStrategy());
-        map.put(PoolType.POOL_5, new Pool1ShardingKeyStrategy());
+        map.put(PoolType.POOL_3, new Pool3ShardingKeyStrategy());
+        map.put(PoolType.POOL_4, new Pool4ShardingKeyStrategy());
+        map.put(PoolType.POOL_5, new Pool5ShardingKeyStrategy());
         return map;
     }
 
