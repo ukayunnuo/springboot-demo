@@ -54,24 +54,20 @@
         },
 
         methods: {
-
             connect() {
                 this.socket = new WebSocket(ws_url);
-
                 this.socket.onopen = function () {
                     ELEMENT.Message({
                         message: '连接服务器成功...',
                         type: 'success'
                     });
                 };
-
                 this.socket.onmessage = function (event) {
                     ELEMENT.Message({
                         message: '接收服务器消息: ' + event.data,
                         type: 'success'
                     });
                 };
-
                 this.socket.onclose = function () {
                     this.socket = null;
                     ELEMENT.Message({
@@ -79,25 +75,22 @@
                         type: 'warning'
                     });
                 };
-
                 this.socket.onerror = function () {
                     ELEMENT.Message.error('连接服务器失败!');
                     this.socket = null;
                 };
-
             },
-
             close() {
                 this.socket.close();
             },
-
             sendMsg() {
-                if (this.socket != null){
+                if (this.socket && this.socket.readyState === WebSocket.OPEN) {
                     this.socket.send(this.textarea);
+                    ELEMENT.Message.success('消息发送成功!');
+                } else {
+                    ELEMENT.Message.warning('服务器已断开，无法发送消息!');
                 }
             }
-
-
         }
     })
 </script>
