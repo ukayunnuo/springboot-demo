@@ -17,6 +17,7 @@
     <description>springboot 单个启动测试模块用例</description>
     <properties>
         <java.version>1.8</java.version>
+        <fastjson2.version>2.0.34</fastjson2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -38,6 +39,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+
+        <!-- fastjson2 -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
 
     </dependencies>
