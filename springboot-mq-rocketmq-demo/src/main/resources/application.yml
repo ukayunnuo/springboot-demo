@@ -1,0 +1,18 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: springboot-mq-rocketmq-demo
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+rocketmq:
+  name-server: 10.61.19.129:9876 # 访问地址
+  producer:
+    group: DEV_TEST_DEMO_GROUP # 必须指定group
+    send-message-timeout: 3000 # 消息发送超时时长，默认3s
+    retry-times-when-send-failed: 3 # 同步发送消息失败重试次数，默认2
+    retry-times-when-send-async-failed: 3 # 异步发送消息失败重试次数，默认2
