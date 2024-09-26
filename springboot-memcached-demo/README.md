@@ -6,6 +6,8 @@ Memcached是一个自由开源的，高性能，分布式内存对象缓存系�
 Memcached是一种基于内存的key-value存储，用来存储小块的任意数据（字符串、对象），这些数据可以是数据库调用、API调用或者是页面渲染的结果。其存储性能在某些方面不比
 redis差，甚至在文本类型数据的存储上性能略优于 redis
 
+操作手册：https://www.runoob.com/memcached/memcached-set-data.html
+
 ## Memcached 安装部署
 
 ### docker 安装
