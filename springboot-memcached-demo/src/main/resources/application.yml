@@ -1,0 +1,22 @@
+server:
+  port: 8096
+
+spring:
+  application:
+    name: springboot-memcached-demo
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+memcached:
+  # memcached服务器节点
+  servers: 192.168.1.4:11211
+  # 是否启用
+  enable: true
+  # nio连接池的数量
+  poolSize: 10
+  # 设置默认操作超时
+  opTimeout: 3000
+  # 是否启用url encode机制
+  sanitizeKeys: false
