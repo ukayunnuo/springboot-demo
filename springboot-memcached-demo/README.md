@@ -36,9 +36,9 @@ services:
       - MEMCACHED_MEM_LIMIT=256 # 限制256M
 ```
 
-### Springboot 集成 Memcached
+## Springboot 集成 Memcached
 
-1. 添加POM依赖
+### 1. 添加POM依赖
 
 ```xml
 
@@ -51,7 +51,7 @@ services:
 
 ```
 
-2. yml 配置Memcached连接
+### 2. yml 配置Memcached连接
 ```yaml
 memcached:
   # memcached服务器节点
@@ -66,7 +66,7 @@ memcached:
   sanitizeKeys: false
 ```
 
-3. Memcached配置类
+### 3. Memcached配置类
 ```java
 @Slf4j
 @Configuration
@@ -98,7 +98,7 @@ public class MemcachedConfig {
 }
 
 ```
-4. 测试类
+### 4. 测试类
 ```java
 
 @Slf4j
