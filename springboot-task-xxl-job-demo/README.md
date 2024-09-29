@@ -173,3 +173,9 @@ public class XxlJobTaskDemo {
 }
 
 ```
+
+## 5. 调度页面
+1. 定义执行器
+![img1.png](img%2Fimg1.png)
+2. 创建定时任务
+![img2.png](img%2Fimg2.png)
