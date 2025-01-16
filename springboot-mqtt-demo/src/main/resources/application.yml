@@ -1,0 +1,13 @@
+server:
+  port: 8010
+
+spring:
+  application:
+    name: springboot-mqtt-demo
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  profiles:
+    active:
+      - mqtt
