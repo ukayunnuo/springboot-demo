@@ -1,37 +1,26 @@
 # springboot-demo
 
 #### 介绍
-springboot框架demo，集成各个常用框架小demo示例
 
-#### 软件架构
-软件架构说明
+springboot框架demo，集成各个常用框架小demo示例,具体示例如下
 
+| Module 名称                                                             | Module 介绍                                      |
+|-----------------------------------------------------------------------|------------------------------------------------|
+| [springboot-single-start-demo](./springboot-single-start-demo)        | spring-boot 的一个 简单示例                           |
+| [java-design-pattern-demo](./java-design-pattern-demo)                | Java设计模式简单示例                                   |
+| [log-logback-demo](./springboot-log-logback-demo)                     | spring-boot 集成logback 实现自定义日志打印格式 简单示例         |
+| [log-log4j2-demo](./springboot-log-log4j2-demo)                       | spring-boot 集成log4j2 实现自定义日志打印格式 简单示例          |
+| [auth0-jwt-demo](./springboot-auth0-jwt-demo)                         | spring-boot 集成jwt 实现token认证 简单示例               |
+| [security-jwt-demo](./springboot-security-jwt-demo)                   | spring-boot 集成 security 权限认证 简单示例              |
+| [elasticsearch-demo](./springboot-elasticsearch-demo)                 | (开发中)spring-boot 集成 elasticsearch 简单示例         |
+| [etcd-demo](./springboot-etcd-demo)                                   | spring-boot 集成 etcd 简单示例                       |
+| [knife4j-demo](./springboot-knife4j-demo)                             | spring-boot 集成 knife4j 实现swagger接口文档 简单示例      |
+| [mq-kafka-demo](./springboot-mq-kafka-demo)                           | spring-boot 集成 kafka 实现消息发送和消费 简单示例            |
+| [mq-rabbitmq-demo](./springboot-mq-rabbitmq-demo)                     | spring-boot 集成 rabbitmq 实现消息发送和消费 简单示例         |
+| [mqtt-demo](./springboot-mqtt-demo)                                   | spring-boot 集成 mqtt 实现消息发送和消费 简单示例             |
+| [orm-mybatis-plus-demo](./springboot-orm-mybatis-plus-demo)           | spring-boot 集成 mybatis-plus 简单示例               |
+| [redis-demo](./springboot-redis-demo)                                 | spring-boot 集成 redis 实现数据缓存、获取 简单示例            |
+| [cluster-redis-hashtag-demo](./springboot-cluster-redis-hashtag-demo) | spring-boot 集成 redis 集群 实现数据分片hashtag算法机制 简单示例 |
+| [security-jwt-demo](./springboot-security-jwt-demo)                   | spring-boot 集成 security 权限认证 简单示例              |
+| [websocket-demo](./springboot-websocket-demo)                         | spring-boot 集成 websocket 实现websocket实时渲染 简单示例  |
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
