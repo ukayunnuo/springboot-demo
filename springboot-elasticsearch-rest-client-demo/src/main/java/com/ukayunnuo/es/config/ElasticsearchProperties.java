@@ -69,6 +69,14 @@ public class ElasticsearchProperties {
     private Account account = new Account();
 
     /**
+     * api key 认证
+     */
+    private Boolean authEnable = false;
+
+
+    private String apiKey;
+
+    /**
      * 索引配置信息
      */
     @Data

@@ -23,5 +23,8 @@ spring:
       max-connect-per-route: 10
       # 最大连接总数量
       max-connect-total: 30
+      # 是否开启apikey 认证
+      auth-enable: false
+      api-key: VnVhQ2ZHY0JDZGJrUUSOWN2
 
 

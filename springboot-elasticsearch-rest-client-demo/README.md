@@ -1,10 +1,8 @@
-# 该项目介绍springboot采用JAVA Client方式进行集成Elasticsearch8.0版本（ES） 实现简单CRUD操作
+# Springboot集成Elasticsearch8.0（ES）版本，采用JAVA Client方式进行连接和实现CRUD操作
 
 ## ES官方文档：
-> 
-> JAVAClient文档: https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html
-> 
-> 其他文档：https://www.elastic.co/guide/en/elasticsearch/client/index.html
+- Elasticsearch Clients文档：[https://www.elastic.co/guide/en/elasticsearch/client/index.html](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
+- JAVA Client 8.0文档: [https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html](https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html)
 
 ## Pom依赖
 
@@ -127,6 +125,9 @@ spring:
       max-connect-per-route: 10
       # 最大连接总数量
       max-connect-total: 30
+      # 是否开启apikey 认证
+      auth-enable: false
+      api-key: VnVhQ2ZHY0JDZGJrUUSOWN2
 
 ```
 
@@ -204,6 +205,14 @@ public class ElasticsearchProperties {
     private Account account = new Account();
 
     /**
+     * api key 认证
+     */
+    private Boolean authEnable = false;
+
+
+    private String apiKey;
+
+    /**
      * 索引配置信息
      */
     @Data
@@ -257,6 +266,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -283,8 +293,20 @@ import java.util.Objects;
 public class ElasticsearchConfig {
 
     @Resource
-    private ElasticsearchProperties elasticsearchProperties;
+    private ElasticsearchProperties properties;
 
+    private List<HttpHost> getHttpHosts() {
+        List<HttpHost> httpHosts = new ArrayList<>();
+        List<String> clusterNodes = properties.getClusterNodes();
+        clusterNodes.forEach(node -> {
+            String[] parts = StringUtils.split(node, ":");
+            if (Objects.isNull(parts) || parts.length != 2) {
+                throw new IllegalArgumentException("Invalid cluster node: " + node);
+            }
+            httpHosts.add(new HttpHost(parts[0], Integer.parseInt(parts[1]), properties.getSchema()));
+        });
+        return httpHosts;
+    }
 
     public RestClient getRestClient() {
         List<HttpHost> httpHosts = getHttpHosts();
@@ -293,52 +315,42 @@ public class ElasticsearchConfig {
         // 请求配置
         builder.setRequestConfigCallback(requestConfigBuilder ->
                 requestConfigBuilder
-                        .setConnectTimeout(elasticsearchProperties.getConnectTimeout())
-                        .setSocketTimeout(elasticsearchProperties.getSocketTimeout())
-                        .setConnectionRequestTimeout(elasticsearchProperties.getConnectionRequestTimeout())
+                        .setConnectTimeout(properties.getConnectTimeout())
+                        .setSocketTimeout(properties.getSocketTimeout())
+                        .setConnectionRequestTimeout(properties.getConnectionRequestTimeout())
         );
 
         // 连接配置
         builder.setHttpClientConfigCallback(httpClientBuilder ->
                         httpClientBuilder
-                                .setMaxConnTotal(elasticsearchProperties.getMaxConnectTotal())
-                                .setMaxConnPerRoute(elasticsearchProperties.getMaxConnectPerRoute())
+                                .setMaxConnTotal(properties.getMaxConnectTotal())
+                                .setMaxConnPerRoute(properties.getMaxConnectPerRoute())
 //                        .setDefaultHeaders(Arrays.asList(
 //                                new BasicHeader("X-Elastic-Product", "Elasticsearch")))
         );
 
-        // 认证授权
-        ElasticsearchProperties.Account account = elasticsearchProperties.getAccount();
+        // 认证授权account
+        ElasticsearchProperties.Account account = properties.getAccount();
         if (StringUtils.hasText(account.getUsername()) && StringUtils.hasText(account.getPassword())) {
             CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
             credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(account.getUsername(), account.getPassword()));
             builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
         }
+        List<BasicHeader> basicHeaders = new ArrayList<>();
+        // 是否开启apikey 认证
+        if (properties.getAuthEnable()) {
+            basicHeaders.add(new BasicHeader("Authorization", "ApiKey " + properties.getApiKey()));
+        }
+//        basicHeaders.add(new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()));
+//        basicHeaders.add(new BasicHeader("X-Elastic-Product", "Elasticsearch"));
 
         // 请求头
-       /* builder.setDefaultHeaders(
-                new BasicHeader[]{
-                        new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()),
-                        new BasicHeader("X-Elastic-Product", "Elasticsearch"),
-                });
-*/
-        log.info("ElasticsearchClient init! param:{}", JSONObject.toJSONString(elasticsearchProperties));
+        builder.setDefaultHeaders(basicHeaders.toArray(new BasicHeader[0]));
+        log.info("ElasticsearchClient init! param:{}", JSONObject.toJSONString(properties));
 
         return builder.build();
     }
 
-    private List<HttpHost> getHttpHosts() {
-        List<HttpHost> httpHosts = new ArrayList<>();
-        List<String> clusterNodes = elasticsearchProperties.getClusterNodes();
-        clusterNodes.forEach(node -> {
-            String[] parts = StringUtils.split(node, ":");
-            if (Objects.isNull(parts) || parts.length != 2) {
-                throw new IllegalArgumentException("Invalid cluster node: " + node);
-            }
-            httpHosts.add(new HttpHost(parts[0], Integer.parseInt(parts[1]), elasticsearchProperties.getSchema()));
-        });
-        return httpHosts;
-    }
 
     @Bean
     @ConditionalOnMissingBean
