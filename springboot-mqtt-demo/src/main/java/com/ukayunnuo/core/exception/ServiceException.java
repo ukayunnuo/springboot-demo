@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
  * 业务服务 异常类
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 public class ServiceException extends RuntimeException {
 

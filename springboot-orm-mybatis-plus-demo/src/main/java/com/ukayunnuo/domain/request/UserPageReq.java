@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  * user page 请求 dto
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

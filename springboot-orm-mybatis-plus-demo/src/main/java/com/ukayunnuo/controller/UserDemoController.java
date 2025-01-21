@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * User 测试 API接口
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 @RestController
 @RequestMapping("/demo/user")
