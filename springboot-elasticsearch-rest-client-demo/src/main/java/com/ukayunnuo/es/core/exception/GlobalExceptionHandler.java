@@ -1,8 +1,8 @@
-package com.ukayunnuo.core.exception;
+package com.ukayunnuo.es.core.exception;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.ukayunnuo.core.Result;
+import com.ukayunnuo.es.core.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -16,7 +16,7 @@ import java.util.Map;
  * 全局异常处理程序
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 @Slf4j
 @RestControllerAdvice

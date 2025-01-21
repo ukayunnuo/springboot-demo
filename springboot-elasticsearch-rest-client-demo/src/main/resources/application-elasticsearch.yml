@@ -1,0 +1,27 @@
+spring:
+  data:
+    es:
+      cluster-name: es-docker-cluster
+      cluster-nodes:
+        - 127.0.0.1:9200
+      # 认证账户
+      account:
+        password:
+        username:
+      index:
+        # 分片数量
+        number-of-replicas: 0
+        # 副本数量
+        number-of-shards: 3
+      # 连接超时时间(毫秒)
+      connect-timeout: 1000
+      # socket 超时时间(毫秒)
+      socket-timeout: 3000
+      # 连接请求超时时间(毫秒)
+      connection-request-timeout: 500
+      # 每个路由的最大连接数量
+      max-connect-per-route: 10
+      # 最大连接总数量
+      max-connect-total: 30
+
+

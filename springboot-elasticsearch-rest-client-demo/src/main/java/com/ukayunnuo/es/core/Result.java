@@ -1,4 +1,4 @@
-package com.ukayunnuo.core;
+package com.ukayunnuo.es.core;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.util.Date;
  * 通用返回请求类
  *
  * @author yunnuo
- * @date 2023-09-13
+ * @since 1.0.0
  */
 @Data
 public class Result<T> implements Serializable {

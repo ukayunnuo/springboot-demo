@@ -10,17 +10,20 @@
     </parent>
 
     <groupId>com.ukayunnuo</groupId>
-    <artifactId>springboot-elasticsearch-demo</artifactId>
+    <artifactId>springboot-elasticsearch-rest-client-demo</artifactId>
     <version>1.0.0</version>
 
     <name>springboot-elasticsearch-demo</name>
-    <description>springboot 集成 Elasticsearch（ES）测试模块</description>
+    <description>springboot 集成 Elasticsearch（ES） rest 连接 测试模块</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.28</lombok.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <hutool.version>5.8.21</hutool.version>
+        <es.version>8.17.0</es.version>
+        <jakarta.version>2.1.3</jakarta.version>
+        <jackson.version>2.17.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -33,21 +36,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- elasticsearch -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
-
-
-        <!-- 热部署插件 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
 
         <!-- lombok -->
@@ -69,6 +57,46 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+
+        <!-- elasticsearch -->
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>${es.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.elasticsearch.client</groupId>
+                    <artifactId>elasticsearch-rest-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.json</groupId>
+                    <artifactId>jakarta.json-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${es.version}</version>
+        </dependency>
+
+        <!-- jakarta -->
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>${jakarta.version}</version>
+        </dependency>
+        <!-- jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>
