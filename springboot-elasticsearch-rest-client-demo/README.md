@@ -1,5 +1,7 @@
 # Springboot集成Elasticsearch8.0（ES）版本，采用JAVA Client方式进行连接和实现CRUD操作
 
+> 在ES7.15版本之后，ES官方将高级客户端 `RestHighLevelClient`标记为弃用状态。同时推出了全新的 Java API客户端 Elasticsearch Java API Client，该客户端也将在 Elasticsearch8.0及以后版本中成为官方推荐使用的客户端。
+
 ## ES官方文档：
 - Elasticsearch Clients文档：[https://www.elastic.co/guide/en/elasticsearch/client/index.html](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
 - JAVA Client 8.0文档: [https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html](https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html)
