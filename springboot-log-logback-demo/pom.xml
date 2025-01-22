@@ -13,7 +13,7 @@
     <artifactId>springboot-log-logback-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>springboot-log-log4j2-demo</name>
+    <name>springboot-log-logback-demo</name>
     <description>springboot 集成 logback 日志框架 demo</description>
     <properties>
         <java.version>1.8</java.version>
