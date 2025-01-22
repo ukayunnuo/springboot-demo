@@ -1,54 +1,57 @@
 # 该项目介绍springboot使用logback集成logstash 实现日志上报給logstash, 实现ELK日志采集
 
 ## pom依赖
+
 ```xml
 
 <properties>
-        <java.version>1.8</java.version>
-        <lombok.version>1.18.28</lombok.version>
-        <fastjson2.version>2.0.34</fastjson2.version>
-        <junit.version>4.13.2</junit.version>
-        <logstash.version>7.2</logstash.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <java.version>1.8</java.version>
+    <lombok.version>1.18.28</lombok.version>
+    <fastjson2.version>2.0.34</fastjson2.version>
+    <junit.version>4.13.2</junit.version>
+    <logstash.version>7.2</logstash.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
 
-    <dependencies>
+<dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
+<!-- lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>${lombok.version}</version>
+</dependency>
 
-        <!-- fastjson2 -->
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-            <version>${fastjson2.version}</version>
-        </dependency>
+<!-- fastjson2 -->
+<dependency>
+    <groupId>com.alibaba.fastjson2</groupId>
+    <artifactId>fastjson2</artifactId>
+    <version>${fastjson2.version}</version>
+</dependency>
 
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash.version}</version>
-        </dependency>
+<!-- logstash -->
+<dependency>
+    <groupId>net.logstash.logback</groupId>
+    <artifactId>logstash-logback-encoder</artifactId>
+    <version>${logstash.version}</version>
+</dependency>
 
-    </dependencies>
+</dependencies>
 
 ```
 
 ## yaml配置
+
 ```yaml
 
 server:
@@ -73,8 +76,8 @@ logging:
 
 
 ```
-注意：需要文件名需要为logback-spring.xml ，不然在配置日志参数时，会报错无法获取到yaml的配置
 
+注意：需要文件名需要为logback-spring.xml ，不然在配置日志参数时，会报错无法获取到yaml的配置
 
 ## logback-spring.xml配置
 
@@ -173,25 +176,64 @@ logging:
 
 ```
 
-# 设置监听端口，格式为json格式
+# 采集配置
+
 input {
+
+  # 设置监听端口，格式为json格式
   tcp {
     mode => "server"
     host => "0.0.0.0"
     port => 4560
     codec => json
+    type => "json_log"  # 自定义类型标识
+  }
+
+  # 监听nginx日志
+  file {
+    path => ["/data/docker/nginx/logs/access.log", "/data/docker/nginx/logs/error.log"]
+    type => "nginx_log" # 自定义类型
+    start_position => "beginning" # beginning-从头开始 end-从结束不配置默认读取最新的数据,默认end
   }
 }
 
-# 输出到es中
+filter {
+
+  # json 格式 设置app名称，用于定义index索引名称
+  if [type] == "json_log" {
+    mutate {
+      copy => { "app" => "[@metadata][app]" }
+    }
+  }
+
+  # nginx日志格式配置
+  if [type] == "nginx_log" {
+    grok {
+      match => { "message" => "%{COMBINEDAPACHELOG}"} # 标准日志格式
+    }
+
+    date {
+      match => [ "timestamp", "ISO8601", "yyyy/MM/dd HH:mm:ss" ] # 增加ISO8601支持更多日期格式
+      target => "@timestamp"
+    }
+
+    mutate {
+      add_field => { "[@metadata][app]" => "%{type}" }
+    }
+  }
+
+}
+
 output {
   elasticsearch {
-    hosts => "elasticsearch:9200"
-    index => "logstash-%{app}-%{+YYYY.MM.dd}"
+    hosts => ["elasticsearch:9200"]
+    index => "%{[@metadata][app]}-%{+YYYY.MM.dd}"
   }
+  
   # 输出到控制台以便调试
   # stdout { codec => rubydebug }
 }
+
 
 ```
 
