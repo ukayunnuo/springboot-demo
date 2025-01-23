@@ -1,0 +1,26 @@
+### 消息发送-single模式
+POST http://localhost:8087/demo/kafka/pushTest
+Content-Type: application/json
+
+{
+  "topic": "default_container_factory-test.kafka.demo.default.single",
+  "msg": "test single send..."
+}
+
+### 消息发送-batch模式
+POST http://localhost:8087/demo/kafka/pushTest
+Content-Type: application/json
+
+{
+  "topic": "default_container_factory-test.kafka.demo.default.batch",
+  "msg": "test batch send..."
+}
+
+### 消息发送-自定义
+POST http://localhost:8087/demo/kafka/pushTest
+Content-Type: application/json
+
+{
+  "topic": "batch_container_factory-test.kafka.demo.batch",
+  "msg": "test custom batch send..."
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="log.path" value="/data/logs/springboot-log-logback-demo"/>
+    <property name="console.log.pattern"
+              value="%green(%d{yyyy-MM-dd HH:mm:ss}) %highlight([%level]) %boldMagenta(${PID}) --- %green([%thread])  %boldMagenta(%class) - [%method,%line]: %msg%n"/>
+    <property name="log.pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss} [%level] ${PID} --- [%thread] %class - [%method,%line]: %msg%n"/>
+
+    <springProperty name="LOG_STASH_URL" scope="context" source="logging.logstash.url" defaultValue="127.0.0.1:4560"/>
+    <springProperty name="app" scope="context" source="spring.application.name" defaultValue="springboot-server"/>
+
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console.log.pattern}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="file_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/out.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/out.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <appender name="async_out" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="file_out"/>
+    </appender>
+
+    <!-- Logstash -->
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOG_STASH_URL}</destination>
+        <!-- logstash默认输出格式  -->
+        <!-- <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+             <customFields>{"app":"${app}"}</customFields>
+             <pattern>${log.json.pattern}</pattern>
+         </encoder>-->
+
+        <!-- 自定义logstash输出格式-->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "app":"${app}",
+                        "timestamp": "%d{MM-dd HH:mm:ss.SSS}",
+                        "level": "%level",
+                        "class": "%class",
+                        "method": "%method",
+                        "line": "%class#%method - %line",
+                        "message": "%msg",
+                        "header.client-ip": "%X{header.client-ip}",
+                        "header.content-length": "%X{header.content-length}",
+                        "thread": "%thread",
+                        "stack_trace": "%exception{10}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="async_out"/>
+        <appender-ref ref="logstash"/>
+    </root>
+
+</configuration>

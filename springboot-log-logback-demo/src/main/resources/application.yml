@@ -1,0 +1,16 @@
+server:
+  port: 8011
+
+spring:
+  application:
+    name: springboot-log-logback-demo
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+# 日志配置
+logging:
+  level:
+    org.springframework: warn
+  config: classpath:logback.xml

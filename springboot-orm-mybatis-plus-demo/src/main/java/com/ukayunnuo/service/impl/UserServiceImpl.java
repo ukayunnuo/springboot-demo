@@ -20,7 +20,7 @@ import java.util.Objects;
  * User 服务实现
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {

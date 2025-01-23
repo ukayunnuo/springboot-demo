@@ -1,0 +1,22 @@
+spring:
+    # MQTT配置信息
+  mqtt:
+    # 是否启用mqtt功能
+    enabled: true
+    # MQTT服务地址（多个用逗号隔开）
+    url: tcp://10.61.19.128:1883
+    # 用户名
+    username: admin
+    # 密码
+    password: mqtt2024
+    # 客户端id(不允许重复)
+    client-id: test-client-1
+    # 默认推送主题（多个用逗号隔开）
+      # 单级通配符 (+)：匹配一个层级的主题。例如，sensor/+/temperature 可以匹配 sensor/room1/temperature 和 sensor/room2/temperature。
+      # 多级通配符 (#)：匹配多个层级的主题。例如，sensor/# 可以匹配 sensor/room1/temperature、sensor/room2/humidity 等
+    default-topic: test-topic/#,test-topic-cc/+
+#    default-topic: test-topic/1,test-topic/2
+    # 超时时间 （单位：秒）
+    timeout: 100
+    # 心跳 （单位：秒）
+    keepalive: 60

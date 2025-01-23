@@ -9,7 +9,7 @@ import com.ukayunnuo.domain.request.UserPageReq;
  * User 服务接口
  *
  * @author yunnuo <a href="2552846359@qq.com">Email: 2552846359@qq.com</a>
- * @date 2023-09-13
+ * @since 1.0.0
  */
 public interface UserService extends IService<User> {
 
