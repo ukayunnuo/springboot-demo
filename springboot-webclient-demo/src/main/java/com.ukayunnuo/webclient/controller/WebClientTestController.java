@@ -53,7 +53,7 @@ public class WebClientTestController {
                     // 同步阻塞响应
                     .block();
         } catch (Exception e) {
-            log.error("postSynchronousReq error! req:{}, e:{}", req, e.getMessage(), e);
+            log.error("发送同步请求 error! req:{}, e:{}", req, e.getMessage(), e);
             throw new ServiceException(ErrorCode.WEB_CLIENT_ERROR);
         }
         return Result.success(response);
@@ -70,19 +70,19 @@ public class WebClientTestController {
                 // 不做任何处理
 //                .subscribe()
                 .subscribe(response -> { // 响应结果
-                            log.info("postAsyncReq response:{}", response);
+                            log.info("发送异步请求 response:{}", response);
                         }, error -> {  // 请求异常错误处理
 
                             if (error instanceof WebClientRequestException) {  // 请求异常
-                                log.error("postAsyncReq error! --> WebClientRequestException req:{}, e:{}", req, error.getMessage(), error);
+                                log.error("发送异步请求 error! --> WebClientRequestException req:{}, e:{}", req, error.getMessage(), error);
                             } else if (error instanceof WebClientResponseException) { // 响应异常
-                                log.error("postAsyncReq error! --> WebClientResponseException req:{}, e:{}", req, error.getMessage(), error);
+                                log.error("发送异步请求 error! --> WebClientResponseException req:{}, e:{}", req, error.getMessage(), error);
                             } else {
                                 // 其他异常
-                                log.error("postAsyncReq error! ——> OtherException req:{}, e:{}", req, error.getMessage(), error);
+                                log.error("发送异步请求 error! ——> OtherException req:{}, e:{}", req, error.getMessage(), error);
                             }
                         }, () -> { // 正常请求完成的处理
-                            log.info("postAsyncReq complete! url:{} ", req.getUrl());
+                            log.info("发送异步请求 complete! url:{} ", req.getUrl());
                         }
                 );
         return Result.success("调用完成！");
