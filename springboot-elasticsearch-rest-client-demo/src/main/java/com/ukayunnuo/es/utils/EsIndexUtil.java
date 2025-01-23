@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 /**
  * ES 索引 index 相关工具
  *
- * @author hxt <a href="xthe3257@cggc.cn">Email: xthe3257@cggc.cn </a>
+ * @author yunnuo
  * @since 1.0.0
  */
 @Slf4j

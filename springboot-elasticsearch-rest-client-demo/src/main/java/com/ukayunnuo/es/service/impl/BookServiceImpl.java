@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * ES boot index 服务实现类
  *
- * @author hxt <a href="xthe3257@cggc.cn">Email: xthe3257@cggc.cn </a>
+ * @author yunnuo
  * @since 1.0.0
  */
 @Slf4j

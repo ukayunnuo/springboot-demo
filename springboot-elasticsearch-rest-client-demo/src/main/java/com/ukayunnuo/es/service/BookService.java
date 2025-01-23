@@ -5,7 +5,7 @@ import com.ukayunnuo.es.model.Book;
 import java.util.List;
 
 /**
- * @author hxt <a href="xthe3257@cggc.cn">Email: xthe3257@cggc.cn </a>
+ * @author yunnuo
  * @since 1.0.0
  */
 public interface BookService {

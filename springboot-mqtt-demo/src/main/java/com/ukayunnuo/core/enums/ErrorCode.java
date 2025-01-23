@@ -1,7 +1,7 @@
 package com.ukayunnuo.core.enums;
 
 /**
- * @author hxt <a href="xthe3257@cggc.cn">Email: xthe3257@cggc.cn </a>
+ * @author yunnuo
  * @since 1.0.0
  */
 public enum ErrorCode {
