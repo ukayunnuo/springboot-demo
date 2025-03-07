@@ -12,7 +12,7 @@ springboot框架demo，集成各个常用框架小demo示例,具体示例如下
 | [log-log4j2-demo](./springboot-log-log4j2-demo)                       | spring-boot 集成log4j2 实现自定义日志打印格式 简单示例                      |
 | [auth0-jwt-demo](./springboot-auth0-jwt-demo)                         | spring-boot 集成jwt 实现token认证 简单示例                           |
 | [security-jwt-demo](./springboot-security-jwt-demo)                   | spring-boot 集成 security 权限认证 简单示例                          |
-| [elasticsearch-demo](./springboot-elasticsearch-demo)                 | (开发中)spring-boot 集成 elasticsearch 简单示例                     |
+| [elasticsearch-demo](./springboot-elasticsearch-rest-client-demo)     | spring-boot 集成 elasticsearch 简单示例                          |
 | [etcd-demo](./springboot-etcd-demo)                                   | spring-boot 集成 etcd 简单示例                                   |
 | [knife4j-demo](./springboot-knife4j-demo)                             | spring-boot 集成 knife4j 实现swagger接口文档 简单示例                  |
 | [mq-kafka-demo](./springboot-mq-kafka-demo)                           | spring-boot 集成 kafka 实现消息发送和消费 简单示例                        |
