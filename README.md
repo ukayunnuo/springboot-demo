@@ -25,4 +25,5 @@ springboot框架demo，集成各个常用框架小demo示例,具体示例如下
 | [websocket-demo](./springboot-websocket-demo)                         | spring-boot 集成 websocket 实现websocket实时渲染 简单示例              |
 | [log-logstash-logback-demo](./springboot-log-logstash-logback-demo)   | springboot使用logback集成logstash 实现日志上报給logstash, 实现ELK日志采集   |
 | [webclient-demo](./springboot-webclient-demo)                         | springboot集成WebClient实现同步请求和异步请求、以及响应式编程、响应式流、响应式Mono和Flux |
+| [nacos-demo](./springboot-nacos-demo)                                 | springboot集成nacos,实现动态配置更新                                 |
 
