@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <property name="log.path" value="/data/logs/springboot-log-logback-demo"/>
+    <!--  springProperty 标签需要定义文件名为logback-spring.xml  -->
+    <springProperty scope="context" name="logName" source="spring.application.name" defaultValue="crm"/>
+    <contextName>${logName}</contextName>
+    <property name="log.path" value="./logs/${logName}"/>
     <property name="console.log.pattern"
-              value="%green(%d{yyyy-MM-dd HH:mm:ss}) %highlight([%level]) %boldMagenta(${PID}) --- %green([%thread])  %boldMagenta(%class) - [%method,%line]: %msg%n"/>
-    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%level] ${PID} --- [%thread] %class - [%method,%line]: %msg%n"/>
+              value="%green(%d{yyyy-MM-dd HH:mm:ss}) %boldMagenta(%contextName) %highlight([%level]) %boldMagenta(${PID}) --- %green([%thread])  %boldMagenta(%class) - [%method,%line]: %msg%n"/>
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %contextName [%level] ${PID} --- [%thread] %class - [%method,%line]: %msg%n"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -13,9 +16,9 @@
     </appender>
 
     <appender name="file_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/out.log</file>
+        <file>${log.path}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/out.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
         <encoder>
