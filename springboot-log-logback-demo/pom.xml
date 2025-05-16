@@ -20,6 +20,7 @@
         <lombok.version>1.18.28</lombok.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <junit.version>4.13.2</junit.version>
+        <logstash.version>6.6</logstash.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -47,6 +48,12 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
             <version>${fastjson2.version}</version>
+        </dependency>
+        <!-- logstash -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash.version}</version>
         </dependency>
 
     </dependencies>

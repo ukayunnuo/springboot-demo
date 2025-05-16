@@ -6,7 +6,9 @@
     <property name="log.path" value="./logs/${logName}"/>
     <property name="console.log.pattern"
               value="%green(%d{yyyy-MM-dd HH:mm:ss}) %boldMagenta(%contextName) %highlight([%level]) %boldMagenta(${PID}) --- %green([%thread])  %boldMagenta(%class) - [%method,%line]: %msg%n"/>
-    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %contextName [%level] ${PID} --- [%thread] %class - [%method,%line]: %msg%n"/>
+    <property name="log.pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss} %contextName [%level] ${PID} --- [%thread] %class - [%method,%line]: %msg%n"/>
+
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -35,16 +37,65 @@
         </filter>
     </appender>
 
+    <!-- 输出json格式方便ELK采集 注意：需要添加logstash依赖 -->
+    <appender name="file_json_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}-json.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}-json.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <!-- 时间戳 -->
+                <timestamp>
+                    <pattern>yyyy-MM-dd HH:mm:ss.SSS</pattern>
+                </timestamp>
+                <!-- 自定义字段 -->
+                <pattern>
+                    <pattern>
+                        {
+                        "time": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "app": "${logName}",
+                        "level": "%level",
+                        "thread": "%t",
+                        "class": "%class",
+                        "method": "%method",
+                        "line": "%class#%method:%line",
+                        "message": "%msg",
+                        "stack_trace": "%exception{15}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
     <appender name="async_out" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
         <queueSize>512</queueSize>
         <appender-ref ref="file_out"/>
     </appender>
 
+    <appender name="async_json_out" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="file_json_out"/>
+    </appender>
+
 
     <root level="info">
         <appender-ref ref="console"/>
         <appender-ref ref="async_out"/>
+        <appender-ref ref="async_json_out"/>
     </root>
 
 </configuration>
