@@ -13,7 +13,7 @@
     <artifactId>springboot-nacos-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>springboot-redis-demo</name>
+    <name>springboot-nacos-demo</name>
     <description>springboot 集成nacos 测试模块</description>
     <properties>
         <java.version>1.8</java.version>
